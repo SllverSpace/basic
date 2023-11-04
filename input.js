@@ -47,6 +47,25 @@ class Input {
 	scroll(x, y) {
 		
 	}
+	lockMouse() {
+		const element = canvas
+		if (element.requestPointerLock && !this.mobile) {
+			element.requestPointerLock()
+		}
+	}
+	unlockMouse() {
+		if (document.exitPointerLock && !this.mobile) {
+			document.exitPointerLock()
+		}
+	}
+	isMouseLocked() {
+		if (!mobile) {
+			return document.pointerLockElement == canvas ||
+			document.mozPointerLockElement == canvas ||
+			document.webkitPointerLockElement == canvas
+		}
+		return mouseLocked
+	}
 	mouseDown(event) {
 		if (event.button == 0) {
 			this.mouse.lclick = true
