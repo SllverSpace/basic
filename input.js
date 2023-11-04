@@ -181,6 +181,9 @@ class Input {
 			}
 			this.keysRaw[event.key] = true
 		}
+		if (event.code == "Tab") {
+			event.preventDefault()
+		}
 	}
 	keyup(event) {
 		delete this.keys[event.code]
