@@ -60,9 +60,9 @@ class Input {
 	}
 	isMouseLocked() {
 		if (!this.mobile) {
-			return document.pointerLockElement == canvas ||
-			document.mozPointerLockElement == canvas ||
-			document.webkitPointerLockElement == canvas
+			return document.pointerLockElement ||
+			document.mozPointerLockElement ||
+			document.webkitPointerLockElement
 		}
 		return mouseLocked
 	}
