@@ -134,10 +134,20 @@ class Input {
 		}
 	}
 	blur(event) {
+		this.keys = {}
+		this.jKeys = {}
+		this.keysRaw = {}
+		this.jKeysRaw = []
+		this.mouse.lclick = false
+		this.mouse.rclick = false
+		this.mouse.ldown = false
+		this.mouse.rdown = false
+		this.touches = {}
 		if (this.focused) {
 			this.focused.focused = false
 			this.focused = null
 		}
+		this.unlockMouse()
 	}
 	touchEnd(event) {
 		setTimeout(() => {
