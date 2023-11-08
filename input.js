@@ -64,7 +64,7 @@ class Input {
 			document.mozPointerLockElement ||
 			document.webkitPointerLockElement
 		}
-		return mouseLocked
+		return this.mouse.locked
 	}
 	mouseDown(event) {
 		if (event.button == 0) {
