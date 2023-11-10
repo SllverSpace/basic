@@ -359,11 +359,11 @@ class UI {
             hover() {
                 if (this.hovered()) {
                     document.body.style.cursor = "text"
-                    this.mulX += (0.995-this.mulX) * delta * 15
-                    this.mulY += (0.95-this.mulY) * delta * 15
+                    this.mulX = utils.lerp(this.mulX, 0.995, delta*15)
+                    this.mulY = utils.lerp(this.mulY, 0.95, delta*15)
                 } else {
-                    this.mulX += (1-this.mulX) * delta * 15
-                    this.mulY += (1-this.mulY) * delta * 15
+                    this.mulX = utils.lerp(this.mulX, 1, delta*15)
+                    this.mulY = utils.lerp(this.mulY, 1, delta*15)
                 }
             }
             draw() {
@@ -453,12 +453,12 @@ class UI {
                     this.mul = 0
                 }
                 if (this.hovered()) {
-                    this.visWidth += (this.width*this.hoverMul*this.mul - this.visWidth) * delta * 15
-                    this.visHeight += (this.height*this.hoverMul*this.mul - this.visHeight) * delta * 15
+                    this.visWidth = utils.lerp(this.visWidth, this.width*this.hoverMul*this.mul, delta*15)
+                    this.visHeight = utils.lerp(this.visHeight, this.height*this.hoverMul*this.mul, delta*15)
                     document.body.style.cursor = "pointer"
                 } else {
-                    this.visWidth += (this.width*this.mul - this.visWidth) * delta * 15
-                    this.visHeight += (this.height*this.mul - this.visHeight) * delta * 15
+                    this.visWidth = utils.lerp(this.visWidth, this.width*this.mul, delta*15)
+                    this.visHeight = utils.lerp(this.visHeight, this.height*this.mul, delta*15)
                 }
             }
             draw() {
@@ -557,7 +557,7 @@ class UI {
                 ui.doScroll = false
                 this.stop -= delta
                 if (this.stop <= 0 || this.tVis-this.vis >= 0) {
-                    this.vis += (this.tVis-this.vis)*delta*10
+                    this.vis = utils.lerp(this.vis, this.tVis, delta*10)
                 }
 
                 this.tVis = 0
@@ -578,7 +578,7 @@ class UI {
                 ui.rect(this.width-off.x-size/2, this.height/2, size, this.height-off.y*2, [150, 150, 150, this.vis])
 
                 ui.circle(this.width-off.x-size/2, Math.abs(this.off.y)/Math.abs(this.bounds.minY) * (this.height-off.y*2) + off.y, size*0.75, [200, 200, 200, this.vis])
-                 ui.doScroll = oldS
+                ui.doScroll = oldS
             }
             drawBorder(size, colour) {
                 let oldS = ui.doScroll
