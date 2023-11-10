@@ -16,6 +16,9 @@ class Utils {
         window.subv3 = this.subv3
         window.mulv3 = this.mulv3
         window.divv3 = this.divv3
+
+        window.rotv2 = this.rotv2
+        window.rotv3 = this.rotv3
     }
 
     vec2(x, y) {
@@ -52,7 +55,19 @@ class Utils {
     }
 
     rotv2(vec, rot) {
-        
+        return {x: vec.x*Math.cos(rot) - vec.y*Math.cos(rot), y: vec.x*Math.sin(rot) + vec.y*Math.sin(rot)}
+    }
+    rotv3(vec, rot) {
+        let x1 = vec.x * Math.cos(rot.z) - vec.y * Math.sin(rot.z)
+        let y1 = vec.x * Math.sin(rot.z) + vec.y * Math.cos(rot.z)
+
+        let y2 = y1 * Math.cos(rot.x) - vec.z * Math.sin(rot.x)
+        let z1 = y1 * Math.sin(rot.x) + vec.z * Math.cos(rot.x)
+
+        let x2 = x1 * Math.cos(rot.y) + z1 * Math.sin(rot.y)
+        let z2 = -x1 * Math.sin(rot.y) + z1 * Math.cos(rot.y)
+
+        return {x:x2, y:y2, z:z2}
     }
 
     lerp(start, end, multiply) {
