@@ -334,6 +334,7 @@ class UI {
             outlineSize = 10
             outlineColour = [0, 0, 0, 1]
             colour = [0, 0, 0, 1]
+            hide = false
             constructor(x, y, width, height, placeholder="", colour=[127, 127, 127, 1]) {
                 super(x, y, width, height)
                 this.placeholder = placeholder
@@ -373,7 +374,14 @@ class UI {
                 if (this.text.length < 1) {
                     ui.text(this.x - this.width/2 + this.height * 0.75 * 0.25, this.y, this.height*0.75, this.placeholder, {colour: [100, 100, 100, 1]}).width
                 } else {
-                    width = ui.text(this.x - this.width/2 + this.height * 0.75 * 0.25, this.y, this.height*0.75, this.text).width
+                    let text2 = this.text
+                    if (this.hide) {
+                        text2 = ""
+                        for (let i = 0; i < this.text.length; i++) {
+                            text2 += "*"
+                        }
+                    }
+                    width = ui.text(this.x - this.width/2 + this.height * 0.75 * 0.25, this.y, this.height*0.75, text2).width
                 }
 
                 this.time += delta
