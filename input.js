@@ -44,6 +44,17 @@ class Input {
 	checkInputs(event) {
 
 	}
+	cistart() {
+		if (this.focused) {
+			this.focused.focused = false
+			this.focused = null
+		}
+	}
+	ciend() {
+		if (!this.focused) {
+			this.getInput.blur()
+		}
+	}
 	scroll(x, y) {
 		
 	}

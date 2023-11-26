@@ -1,0 +1,9 @@
+canvas {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+
+body {
+    overflow: hidden;
+}

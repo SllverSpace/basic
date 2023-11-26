@@ -368,11 +368,20 @@ class UI {
                 }
             }
             draw() {
-                ui.rect(this.x, this.y, this.width * this.mulX, this.height * this.mulY, this.colour, this.outlineSize, this.outlineColour)
 
-                let width = 0
-                if (this.text.length < 1) {
-                    ui.text(this.x - this.width/2 + this.height * 0.75 * 0.25, this.y, this.height*0.75, this.placeholder, {colour: [100, 100, 100, 1]}).width
+                ctx.save()
+
+                ctx.beginPath()
+                let w = this.width * this.mulX + this.outlineSize/2
+                let h = this.height * this.mulY + this.outlineSize/2
+                ctx.rect(this.x - w/2, this.y - h/2, w, h)
+                ctx.clip()
+
+                ui.rect(this.x, this.y, this.width * this.mulX, this.height * this.mulY, this.colour)
+
+                let textWidth = 0
+                 if (this.text.length < 1) {
+                    textWidth = ui.measureText(this.height*0.75, this.placeholder, {colour: [100, 100, 100, 1]}).width
                 } else {
                     let text2 = this.text
                     if (this.hide) {
@@ -381,7 +390,24 @@ class UI {
                             text2 += "*"
                         }
                     }
-                    width = ui.text(this.x - this.width/2 + this.height * 0.75 * 0.25, this.y, this.height*0.75, text2).width
+                    textWidth = ui.measureText(this.height*0.75, text2).width
+                }
+
+                let off = textWidth - this.width + this.outlineSize*1.5
+                if (off < 0) off = 0
+
+                let width = 0
+                if (this.text.length < 1) {
+                    ui.text(this.x - this.width/2 + this.height * 0.75 * 0.25 - off, this.y, this.height*0.75, this.placeholder, {colour: [100, 100, 100, 1]}).width
+                } else {
+                    let text2 = this.text
+                    if (this.hide) {
+                        text2 = ""
+                        for (let i = 0; i < this.text.length; i++) {
+                            text2 += "*"
+                        }
+                    }
+                    width = ui.text(this.x - this.width/2 + this.height * 0.75 * 0.25 - off, this.y, this.height*0.75, text2).width
                 }
 
                 this.time += delta
@@ -389,7 +415,7 @@ class UI {
                     this.time = 0
                 }
                 if (this.focused && this.time < 0.5) {
-                    ui.rect(this.x - this.width/2 + this.height * 0.75 * 0.25 + width, this.y, this.height*0.75/7, this.height*0.75, [255, 255, 255, 1])
+                    ui.rect(this.x - this.width/2 + this.height * 0.75 * 0.25 + width - off, this.y, this.height*0.75/7, this.height*0.75, [255, 255, 255, 1])
                 }
                 if (this.lastText != this.text) {
                     this.time = 0
@@ -397,7 +423,6 @@ class UI {
                 this.lastText = this.text
 
                 let s = this.height/7 * 2
-                ui.rect(this.x, this.y, this.width + s, this.height + s, [0, 0, 0, 0], this.outlineSize/4, [0, 0, 255, this.focusTime*10])
                 
                 if (this.focused) {
                     this.focusTime += delta
@@ -411,6 +436,11 @@ class UI {
                     }
                 }
 
+                ui.rect(this.x, this.y, this.width * this.mulX, this.height * this.mulY, [0, 0, 0, 0], this.outlineSize/2, this.outlineColour)
+                
+                ctx.restore()
+
+                ui.rect(this.x, this.y, this.width + s, this.height + s, [0, 0, 0, 0], this.outlineSize/4, [0, 0, 255, this.focusTime*10])
             }
         }
     }
