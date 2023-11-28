@@ -463,6 +463,7 @@ class UI {
             clip
             canvas
             textOff = 0
+            colour = [255, 255, 255, 1]
             constructor(x, y, visWidth, visHeight, type, text="", textSize=20) {
                 super(x, y, visWidth, visHeight)
                 this.text = text
@@ -506,9 +507,9 @@ class UI {
                     ui.img(this.x, this.y, this.visWidth, this.visHeight, this.img, this.clip)
                 }
                 if (this.scaleText) {
-                    ui.text(this.x + this.textOff, this.y, this.textSize * ((this.visWidth/this.width + this.visHeight/this.height) / 2), this.text, {align: "center"})
+                    ui.text(this.x + this.textOff, this.y, this.textSize * ((this.visWidth/this.width + this.visHeight/this.height) / 2), this.text, {align: "center", colour: this.colour})
                 } else {
-                    ui.text(this.x + this.textOff, this.y, this.textSize, this.text, {align: "center"})
+                    ui.text(this.x + this.textOff, this.y, this.textSize, this.text, {align: "center", colour: this.colour})
                 }
             }
         }
