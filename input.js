@@ -1,4 +1,6 @@
 
+// my input handler, it uses dynamic event listeners to allow for easy code changes for other projects using this
+
 class Input {
 	mouse = {x: 0, y: 0, locked: false, has: false, ldown: false, rdown: false, lclick: false, rclick: false}
 	keys = {}

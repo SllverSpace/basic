@@ -1,4 +1,6 @@
 
+// uhhh, i did not get to commenting this, but a summary is that everything is made with the canvas.
+
 class UI {
     canvas = null
     font = "sans-serif"
