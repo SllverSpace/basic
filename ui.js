@@ -9,6 +9,7 @@ class UI {
     relative = true
     doScroll = true
     textShadow = {top: 0, bottom: 0, left: 0, right: 0, multiply: 0.5}
+    targetSize = {x: 1500, y: 1000}
     setFont(font, fontPath="") {
         this.fontLoaded = false
         this.font = font
@@ -40,6 +41,23 @@ class UI {
             ctx.save()
             ctx.clip()
         }
+    }
+    getSu() {
+        let w = window.innerWidth
+    	let h = window.innerHeight
+    
+    	let aspect = w / this.targetSize.x
+    
+    	let su = aspect
+    	if (su > h / this.targetSize.y) {
+    		su = h / this.targetSize.y
+    	}
+        return su
+    }
+    newImg(src) {
+        let img = new Image()
+        img.src = src
+        return img
     }
     rect(x, y, width, height, colour=[0, 0, 0, 1], outlineSize=0, outlineColour=[0, 0, 0, 1]) {
         if (this.relative && this.canvas) {
@@ -227,6 +245,7 @@ class UI {
         y = Math.round(y)
         width = Math.round(width/2)*2
         height = Math.round(height/2)*2
+        ctx.imageSmoothingEnabled = false
         if (clip.use) {
             ctx.drawImage(img, clip.x, clip.y, clip.width, clip.height, x-width/2, y-height/2, width, height)
         } else {
