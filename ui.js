@@ -359,7 +359,8 @@ class UI {
             flash = 0
             maxCopies = 100
             flashA = 0
-            copies = [""]
+            copies = []
+            lastText = null
             constructor(x, y, width, height, placeholder="", colour=[127, 127, 127, 1]) {
                 super(x, y, width, height)
                 this.placeholder = placeholder
@@ -392,6 +393,12 @@ class UI {
                     this.mulY = utils.lerp(this.mulY, 1, delta*15)
                 }
 
+                if (this.lastText != this.text) {
+                    this.addCopy()
+                    this.lastText = this.text
+                }
+                console.log(this.copies)
+
                 this.flash -= delta
                 if (this.flash > 0) {
                     this.flashA = utils.lerp(this.flashA, 0.8, delta*20)
@@ -409,9 +416,10 @@ class UI {
                 if (this.copies.length > 1) {
                     this.text = this.copies[this.copies.length-2]
                     this.copies.splice(this.copies.length-1, 1)
+                    this.lastText = this.text
                 } else if (this.copies.length > 0) {
                     this.text = this.copies[0]
-                    this.copies = []
+                    this.lastText = this.text
                 }
             }
             draw() {

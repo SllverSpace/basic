@@ -211,16 +211,13 @@ class Input {
 					this.copyText(this.focused.text)
 					this.focused.flash = 0.1
 					this.focused.text = ""
-					this.focused.addCopy()
 				} else if (event.key == "z" && isCmd) {
 					this.focused.revert()
 				} else if (event.key != "v" || !isCmd) {
 					this.focused.text += event.key
-					this.focused.addCopy()
 				}
 			} else if (event.key == "Backspace") {
 				this.focused.text = this.focused.text.substring(0, this.focused.text.length-1)
-				this.focused.addCopy()
 			}
 			if (event.key == "+") {
 				event.preventDefault()
