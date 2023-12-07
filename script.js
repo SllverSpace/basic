@@ -39,6 +39,8 @@ function update(timestamp) {
 
     test.hover()
     test.draw()
+
+    input.updateInput()
 }
 
 input.checkInputs = (event) => {

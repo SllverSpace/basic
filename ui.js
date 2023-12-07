@@ -363,6 +363,7 @@ class UI {
             lastText = null
             sp = 0
             twi = 0
+            off = 0
             constructor(x, y, width, height, placeholder="", colour=[127, 127, 127, 1]) {
                 super(x, y, width, height)
                 this.placeholder = placeholder
@@ -398,6 +399,20 @@ class UI {
                 if (this.lastText != this.text) {
                     this.addCopy()
                     this.lastText = this.text
+                }
+
+                if (this.focused && input.mouse.lclick) {
+                    let x = input.mouse.x - this.x + this.width/2 + this.off
+                    let stext = ""
+                    let i = 0
+                    this.sp = 0
+                    for (let letter of this.text) {
+                        stext += letter
+                        if (x > ui.measureText(this.height*0.75, stext).width) {
+                            this.sp = i+1
+                        }
+                        i++
+                    }
                 }
 
                 this.flash -= delta
@@ -455,6 +470,7 @@ class UI {
 
                 let off = this.twi - this.width + this.outlineSize*1.5
                 if (off < 0) off = 0
+                this.off = off
 
                 if (!this.focused) {
                     this.sp = this.text.length
