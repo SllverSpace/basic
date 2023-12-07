@@ -396,6 +396,14 @@ class UI {
                     this.mulY = utils.lerp(this.mulY, 1, delta*15)
                 }
 
+                if (this.sp < 0) {
+                    this.sp = 0
+                }
+
+                if (this.sp > this.text.length) {
+					this.sp = this.text.length
+				}
+
                 if (this.lastText != this.text) {
                     this.addCopy()
                     this.lastText = this.text
