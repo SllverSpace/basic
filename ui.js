@@ -464,23 +464,10 @@ class UI {
 
                 ui.rect(this.x, this.y, this.width * this.mulX, this.height * this.mulY, this.colour)
 
-                let textWidth = 0
-                 if (this.text.length < 1) {
-                    textWidth = ui.measureText(this.height*0.75, this.placeholder, {colour: [100, 100, 100, 1]}).width
-                } else {
-                    let text2 = this.text
-                    if (this.hide) {
-                        text2 = ""
-                        for (let i = 0; i < this.text.length; i++) {
-                            text2 += "*"
-                        }
-                    }
-                    textWidth = ui.measureText(this.height*0.75, text2).width
-                }
-
-                let off = this.twi - this.width + this.outlineSize*1.5
-                if (off < 0) off = 0
-                this.off = off
+                let off = this.off
+                // let off = this.twi - this.width + this.outlineSize*1.5*2
+                // if (off < 0) off = 0
+                // this.off = off
 
                 if (!this.focused) {
                     this.sp = this.text.length
@@ -525,6 +512,18 @@ class UI {
                     if (this.focusTime < 0) {
                         this.focusTime = 0
                     }
+                }
+                
+                let max = this.twi - this.width + this.height*0.75 * 0.75
+                if (max - this.off > 0) {
+                    this.off = utils.lerp(this.off, max, delta*10)
+                }
+                let min = this.twi - this.height*0.75 * 0.75
+                if (min - this.off < 0) {
+                    this.off = utils.lerp(this.off, min, delta*10)
+                }
+                if (this.off < 0) {
+                    this.off = 0
                 }
 
                 ui.rect(this.x, this.y, this.width * this.mulX, this.height * this.mulY, [0, 0, 0, 0], this.outlineSize/2, this.outlineColour)

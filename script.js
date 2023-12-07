@@ -15,7 +15,7 @@ function update(timestamp) {
     ui.resizeCanvas()
     ui.getSu()
 
-    test.set(canvas.width/2, canvas.height/2, 600*su, 100*su)
+    test.set(canvas.width/2, canvas.height/2, 800*su, 100*su)
     test.outlineSize = 25*su
 
     test.hover()
