@@ -22,11 +22,22 @@ class Utils {
         window.rotv2 = this.rotv2
         window.rotv3 = this.rotv3
     }
+    setup(id="canvas") {
+        window.canvas = document.getElementById(id)
+        window.ctx = window.canvas.getContext("2d")
+    }
     setStyles() {
         canvas.style.position = "absolute"
         canvas.style.left = 0
         canvas.style.top = 0
         document.body.style.overflow = "hidden"
+    }
+    getDelta(timestamp, max=0.1) {
+        delta = (timestamp - lastTime) / 1000
+        if (!delta || delta < 0) delta = 0
+        if (delta > max) delta = max
+        lastTime = timestamp
+        return delta
     }
     insertAtIndex(originalString, index, stringToInsert) {
         return originalString.slice(0, index) + stringToInsert + originalString.slice(index)

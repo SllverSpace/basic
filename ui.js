@@ -42,6 +42,10 @@ class UI {
             ctx.clip()
         }
     }
+    resizeCanvas() {
+        canvas.width = window.innerWidth
+        canvas.height = window.innerHeight
+    }
     getSu() {
         let w = window.innerWidth
     	let h = window.innerHeight
