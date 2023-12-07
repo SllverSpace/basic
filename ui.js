@@ -43,8 +43,8 @@ class UI {
         }
     }
     resizeCanvas() {
-        canvas.width = window.innerWidth
-        canvas.height = window.innerHeight
+        window.canvas.width = window.innerWidth
+        window.canvas.height = window.innerHeight
     }
     getSu() {
         let w = window.innerWidth
@@ -52,7 +52,7 @@ class UI {
     
     	let aspect = w / this.targetSize.x
     
-    	let su = aspect
+    	window.su = aspect
     	if (su > h / this.targetSize.y) {
     		su = h / this.targetSize.y
     	}

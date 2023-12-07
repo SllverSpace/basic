@@ -33,11 +33,11 @@ class Utils {
         document.body.style.overflow = "hidden"
     }
     getDelta(timestamp, max=0.1) {
-        delta = (timestamp - lastTime) / 1000
-        if (!delta || delta < 0) delta = 0
-        if (delta > max) delta = max
-        lastTime = timestamp
-        return delta
+        window.delta = (timestamp - window.lastTime) / 1000
+        if (!window.delta || window.delta < 0) window.delta = 0
+        if (window.delta > max) window.delta = max
+        window.lastTime = timestamp
+        return window.delta
     }
     insertAtIndex(originalString, index, stringToInsert) {
         return originalString.slice(0, index) + stringToInsert + originalString.slice(index)
