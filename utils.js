@@ -22,7 +22,12 @@ class Utils {
         window.rotv2 = this.rotv2
         window.rotv3 = this.rotv3
     }
-
+    setStyles() {
+        canvas.style.position = "absolute"
+        canvas.style.left = 0
+        canvas.style.top = 0
+        document.body.style.overflow = "hidden"
+    }
     insertAtIndex(originalString, index, stringToInsert) {
         return originalString.slice(0, index) + stringToInsert + originalString.slice(index)
     }
