@@ -356,6 +356,10 @@ class UI {
             outlineColour = [0, 0, 0, 1]
             colour = [0, 0, 0, 1]
             hide = false
+            flash = 0
+            maxCopies = 100
+            flashA = 0
+            copies = [""]
             constructor(x, y, width, height, placeholder="", colour=[127, 127, 127, 1]) {
                 super(x, y, width, height)
                 this.placeholder = placeholder
@@ -387,9 +391,30 @@ class UI {
                     this.mulX = utils.lerp(this.mulX, 1, delta*15)
                     this.mulY = utils.lerp(this.mulY, 1, delta*15)
                 }
+
+                this.flash -= delta
+                if (this.flash > 0) {
+                    this.flashA = utils.lerp(this.flashA, 0.8, delta*20)
+                } else {
+                    this.flashA = utils.lerp(this.flashA, 0, delta*20)
+                }
+            }
+            addCopy() {
+                this.copies.push(this.text)
+                if (this.copies.length > this.maxCopies) {
+                    this.copies.splice(0, 1)
+                }
+            }
+            revert() {
+                if (this.copies.length > 1) {
+                    this.text = this.copies[this.copies.length-2]
+                    this.copies.splice(this.copies.length-1, 1)
+                } else if (this.copies.length > 0) {
+                    this.text = this.copies[0]
+                    this.copies = []
+                }
             }
             draw() {
-
                 ctx.save()
 
                 ctx.beginPath()
@@ -458,6 +483,8 @@ class UI {
                 }
 
                 ui.rect(this.x, this.y, this.width * this.mulX, this.height * this.mulY, [0, 0, 0, 0], this.outlineSize/2, this.outlineColour)
+
+                ui.rect(this.x, this.y, this.width * this.mulX, this.height * this.mulY, [255, 255, 255, this.flashA])
                 
                 ctx.restore()
 

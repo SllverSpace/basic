@@ -30,15 +30,32 @@ class Input {
 		addEventListener("keydown", (event) => {this.keydown(event)})
 		addEventListener("keyup", (event) => {this.keyup(event)})
 		addEventListener("wheel", (event) => {this.wheel(event)})
+		addEventListener("paste", (event) => {this.paste(event)})
 	}
 	setGlobals() {
 		window.keys = this.keys
 		window.jKeys = this.jKeys
+		window.hkeys = this.hkeys
 		window.keysRaw = this.keysRaw
 		window.jKeysRaw = this.jKeysRaw
 		window.mobile = this.mobile
 		window.focused = this.focused
 		window.mouse = this.mouse
+	}
+	copyText(text) {
+		navigator.clipboard.writeText(text)
+	}
+	paste(event) {
+		event.preventDefault()
+		navigator.clipboard.readText()
+		.then(pastedText => {
+			if (this.focused) {
+				this.focused.text += pastedText
+			}
+		})
+		.catch(err => {
+			
+		})
 	}
 	onClick(event) {
 		this.checkInputs(event)
@@ -184,11 +201,26 @@ class Input {
 		}
 	}
 	keydown(event) {
+		let isCmd = event.ctrlKey || event.metaKey
 		if (this.focused) {
 			if (event.key.length == 1) {
-				this.focused.text += event.key
+				if (event.key == "c" && isCmd) {
+					this.copyText(this.focused.text)
+					this.focused.flash = 0.1
+				} else if (event.key == "x" && isCmd) {
+					this.copyText(this.focused.text)
+					this.focused.flash = 0.1
+					this.focused.text = ""
+					this.focused.addCopy()
+				} else if (event.key == "z" && isCmd) {
+					this.focused.revert()
+				} else if (event.key != "v" || !isCmd) {
+					this.focused.text += event.key
+					this.focused.addCopy()
+				}
 			} else if (event.key == "Backspace") {
 				this.focused.text = this.focused.text.substring(0, this.focused.text.length-1)
+				this.focused.addCopy()
 			}
 			if (event.key == "+") {
 				event.preventDefault()
@@ -206,6 +238,10 @@ class Input {
 		}
 		if (event.code == "Tab") {
 			event.preventDefault()
+		}
+		if (isCmd) {
+			this.keys = {}
+			this.keysRaw = {}
 		}
 	}
 	keyup(event) {
