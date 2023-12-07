@@ -23,6 +23,15 @@ class Utils {
         window.rotv3 = this.rotv3
     }
 
+    insertAtIndex(originalString, index, stringToInsert) {
+        return originalString.slice(0, index) + stringToInsert + originalString.slice(index)
+    }
+    removeAtIndex(originalString, index) {
+        if (index < 0 || index >= originalString.length) {
+          return originalString
+        }
+        return originalString.slice(0, index) + originalString.slice(index + 1)
+    }
     vec2(x, y) {
         return {x:x, y:y}
     }

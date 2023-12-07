@@ -50,7 +50,8 @@ class Input {
 		navigator.clipboard.readText()
 		.then(pastedText => {
 			if (this.focused) {
-				this.focused.text += pastedText
+				this.focused.text = utils.insertAtIndex(this.focused.text, this.focused.sp, pastedText)
+				this.focused.sp += pastedText.length
 			}
 		})
 		.catch(err => {
@@ -211,13 +212,33 @@ class Input {
 					this.copyText(this.focused.text)
 					this.focused.flash = 0.1
 					this.focused.text = ""
+					this.focused.sp = 0
 				} else if (event.key == "z" && isCmd) {
 					this.focused.revert()
 				} else if (event.key != "v" || !isCmd) {
-					this.focused.text += event.key
+					this.focused.text = utils.insertAtIndex(this.focused.text, this.focused.sp, event.key)
+					this.focused.sp += 1
 				}
 			} else if (event.key == "Backspace") {
-				this.focused.text = this.focused.text.substring(0, this.focused.text.length-1)
+				this.focused.text = utils.removeAtIndex(this.focused.text, this.focused.sp-1)
+				this.focused.sp -= 1
+				if (this.focused.sp < 0) {
+					this.focused.sp = 0
+				}
+			} else if (event.key == "ArrowLeft") {
+				this.focused.sp -= 1
+				if (this.focused.sp < 0) {
+					this.focused.sp = 0
+				}
+				this.focused.time = 0
+				this.focused.addCopy()
+			} else if (event.key == "ArrowRight") {
+				this.focused.sp += 1
+				if (this.focused.sp > this.focused.text.length) {
+					this.focused.sp = this.focused.text.length
+				}
+				this.focused.time = 0
+				this.focused.addCopy()
 			}
 			if (event.key == "+") {
 				event.preventDefault()

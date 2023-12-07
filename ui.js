@@ -361,6 +361,8 @@ class UI {
             flashA = 0
             copies = []
             lastText = null
+            sp = 0
+            twi = 0
             constructor(x, y, width, height, placeholder="", colour=[127, 127, 127, 1]) {
                 super(x, y, width, height)
                 this.placeholder = placeholder
@@ -397,7 +399,6 @@ class UI {
                     this.addCopy()
                     this.lastText = this.text
                 }
-                console.log(this.copies)
 
                 this.flash -= delta
                 if (this.flash > 0) {
@@ -407,19 +408,24 @@ class UI {
                 }
             }
             addCopy() {
-                this.copies.push(this.text)
+                this.time = 0
+                this.copies.push([this.text, this.sp])
                 if (this.copies.length > this.maxCopies) {
                     this.copies.splice(0, 1)
                 }
             }
             revert() {
                 if (this.copies.length > 1) {
-                    this.text = this.copies[this.copies.length-2]
+                    this.text = this.copies[this.copies.length-2][0]
+                    this.sp = this.copies[this.copies.length-2][1]
                     this.copies.splice(this.copies.length-1, 1)
                     this.lastText = this.text
+                    this.time = 0
                 } else if (this.copies.length > 0) {
-                    this.text = this.copies[0]
+                    this.text = this.copies[0][0]
+                    this.sp = this.copies[0][1]
                     this.lastText = this.text
+                    this.time = 0
                 }
             }
             draw() {
@@ -447,12 +453,16 @@ class UI {
                     textWidth = ui.measureText(this.height*0.75, text2).width
                 }
 
-                let off = textWidth - this.width + this.outlineSize*1.5
+                let off = this.twi - this.width + this.outlineSize*1.5
                 if (off < 0) off = 0
 
-                let width = 0
+                if (!this.focused) {
+                    this.sp = this.text.length
+                }
+
                 if (this.text.length < 1) {
                     ui.text(this.x - this.width/2 + this.height * 0.75 * 0.25 - off, this.y, this.height*0.75, this.placeholder, {colour: [100, 100, 100, 1]}).width
+                    this.twi = utils.lerp(this.twi, 0, delta*20)
                 } else {
                     let text2 = this.text
                     if (this.hide) {
@@ -461,7 +471,8 @@ class UI {
                             text2 += "*"
                         }
                     }
-                    width = ui.text(this.x - this.width/2 + this.height * 0.75 * 0.25 - off, this.y, this.height*0.75, text2).width
+                    ui.text(this.x - this.width/2 + this.height * 0.75 * 0.25 - off, this.y, this.height*0.75, text2)
+                    this.twi = utils.lerp(this.twi, ui.measureText(this.height*0.75, text2.substring(0, this.sp)).width, delta*20)
                 }
 
                 this.time += delta
@@ -469,7 +480,7 @@ class UI {
                     this.time = 0
                 }
                 if (this.focused && this.time < 0.5) {
-                    ui.rect(this.x - this.width/2 + this.height * 0.75 * 0.25 + width - off, this.y, this.height*0.75/7, this.height*0.75, [255, 255, 255, 1])
+                    ui.rect(this.x - this.width/2 + this.height * 0.75 * 0.25 + this.twi - off, this.y, this.height*0.75/7, this.height*0.75, [225, 225, 225, 1])
                 }
                 if (this.lastText != this.text) {
                     this.time = 0
