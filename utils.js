@@ -1,6 +1,3 @@
-
-// just some utils that are used in most of my projects, in this project i mainly use lerp()
-
 class Utils {
     setGlobals(vecs=true) {
         window.lerp = this.lerp

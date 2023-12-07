@@ -1,6 +1,3 @@
-
-// uhhh, i did not get to commenting this, but a summary is that everything is made with the canvas.
-
 class UI {
     canvas = null
     font = "sans-serif"
@@ -314,7 +311,7 @@ class UI {
             y
             width
             height
-            constructor(x, y, width, height) {
+            constructor(x=0, y=0, width=0, height=0) {
                 this.x = x
                 this.y = y
                 this.width = width
@@ -368,8 +365,8 @@ class UI {
             sp = 0
             twi = 0
             off = 0
-            constructor(x, y, width, height, placeholder="", colour=[127, 127, 127, 1]) {
-                super(x, y, width, height)
+            constructor(placeholder="", colour=[127, 127, 127, 1]) {
+                super()
                 this.placeholder = placeholder
                 this.colour = colour
             }
@@ -559,12 +556,9 @@ class UI {
             canvas
             textOff = 0
             colour = [255, 255, 255, 1]
-            constructor(x, y, visWidth, visHeight, type, text="", textSize=20) {
-                super(x, y, visWidth, visHeight)
+            constructor(type, text="") {
+                super()
                 this.text = text
-                this.textSize = textSize
-                this.visWidth = visWidth
-                this.visHeight = visHeight
                 this.type = type
             }
             hovered() {
@@ -621,14 +615,16 @@ class UI {
             gOff = {x: 0, y: 0}
             img
             clip
-            constructor(x, y, width, height, img, handleWidth, handleHeight, handleImg, clip={use: false, x: 0, y: 0, width: 0, height: 0}, handleClip={use: false, x: 0, y: 0, width: 0, height: 0}) {
-                super(x, y, width, height)
+            constructor(img, handleImg, clip={use: false, x: 0, y: 0, width: 0, height: 0}, handleClip={use: false, x: 0, y: 0, width: 0, height: 0}) {
+                super()
                 this.handleImg = handleImg
                 this.handleClip = handleClip
-                this.handleWidth = handleWidth
-                this.handleHeight = handleHeight
                 this.img = img
                 this.clip = clip
+            }
+            setH(width, height) {
+                this.handleWidth = width
+                this.handleHeight = height
             }
             hovered() {
                 return this.hasPoint(input.mouse.x-this.gOff.x, input.mouse.y-this.gOff.y)
@@ -659,8 +655,8 @@ class UI {
             stop = 0
             off = {x: 0, y: 0}
             loff = {x: 0, y: 0}
-            constructor(x, y, width, height, colour=[0, 0, 0, 1]) {
-                super(x, y, width, height)
+            constructor(colour=[0, 0, 0, 1]) {
+                super()
                 this.colour = colour
             }
             update() {
