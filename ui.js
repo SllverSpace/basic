@@ -42,6 +42,7 @@ class UI {
     resizeCanvas() {
         window.canvas.width = window.innerWidth
         window.canvas.height = window.innerHeight
+        document.body.style.cursor = ""
     }
     getSu() {
         let w = window.innerWidth
