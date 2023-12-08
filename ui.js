@@ -177,6 +177,25 @@ class UI {
         }
         return {lines: lines.length, width: maxWidth}
     }
+    circle(x, y, radius, colour=[0, 0, 0, 1], options={}) {
+        var {outlineColour=[0, 0, 0, 0], outlineSize=0, clockwise=true, sangle=0, eangle=Math.PI*2} = options
+        if (this.relative && this.canvas) {
+            x += this.canvas.x-this.canvas.width/2
+            y += this.canvas.y-this.canvas.height/2
+        }
+        if (this.doScroll && this.canvas) {
+            x += this.canvas.off.x
+            y += this.canvas.off.y
+        }
+        ctx.beginPath()
+        ctx.arc(x, y, radius, sangle, eangle, !clockwise)
+        ctx.closePath()
+        ctx.fillStyle = `rgba(${colour[0]},${colour[1]},${colour[2]},${colour[3]})`
+        ctx.stokeStyle = `rgba(${outlineColour[0]},${outlineColour[1]},${outlineColour[2]},${outlineColour[3]})`
+        ctx.lineWidth = outlineSize
+        ctx.stroke()
+        ctx.fill()
+    }
     measureText(size, text, options={}) {
         if (!this.fontLoaded) { return {lines: 0, width: 0} }
 
