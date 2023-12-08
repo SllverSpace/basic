@@ -179,7 +179,6 @@ class UI {
     }
     circle(x, y, radius, colour=[0, 0, 0, 1], options={}) {
         var {outlineColour=[0, 0, 0, 0], outlineSize=0, clockwise=true, sangle=0, eangle=Math.PI*2} = options
-        console.log(sangle, eangle)
         if (this.relative && this.canvas) {
             x += this.canvas.x-this.canvas.width/2
             y += this.canvas.y-this.canvas.height/2
@@ -273,21 +272,6 @@ class UI {
         } else {
             ctx.drawImage(img, x-width/2, y-height/2, width, height)
         }
-    }
-    circle(x, y, radius, colour=[0, 0, 0, 1]) {
-        if (this.relative && this.canvas) {
-            x += this.canvas.x-this.canvas.width/2
-            y += this.canvas.y-this.canvas.height/2
-        }
-        if (this.doScroll && this.canvas) {
-            x += this.canvas.off.x
-            y += this.canvas.off.y
-        }
-        ctx.fillStyle = `rgba(${colour[0]},${colour[1]},${colour[2]},${colour[3]})`
-        ctx.beginPath()
-        ctx.arc(x, y, radius, 0, 2 * Math.PI)
-        ctx.closePath()
-        ctx.fill()
     }
     link(x, y, size, text, options={}) {
         if (!this.fontLoaded) { return {lines: 0, width: 0} }
