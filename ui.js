@@ -191,9 +191,11 @@ class UI {
         ctx.arc(x, y, radius, sangle, eangle, !clockwise)
         ctx.closePath()
         ctx.fillStyle = `rgba(${colour[0]},${colour[1]},${colour[2]},${colour[3]})`
-        ctx.stokeStyle = `rgba(${outlineColour[0]},${outlineColour[1]},${outlineColour[2]},${outlineColour[3]})`
-        ctx.lineWidth = outlineSize
-        ctx.stroke()
+        if (outlineSize > 0) {
+            ctx.stokeStyle = `rgba(${outlineColour[0]},${outlineColour[1]},${outlineColour[2]},${outlineColour[3]})`
+            ctx.lineWidth = outlineSize
+            ctx.stroke()
+        }
         ctx.fill()
     }
     measureText(size, text, options={}) {
