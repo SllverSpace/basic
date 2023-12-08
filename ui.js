@@ -179,6 +179,7 @@ class UI {
     }
     circle(x, y, radius, colour=[0, 0, 0, 1], options={}) {
         var {outlineColour=[0, 0, 0, 0], outlineSize=0, clockwise=true, sangle=0, eangle=Math.PI*2} = options
+        console.log(sangle, eangle)
         if (this.relative && this.canvas) {
             x += this.canvas.x-this.canvas.width/2
             y += this.canvas.y-this.canvas.height/2
