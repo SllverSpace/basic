@@ -28,6 +28,7 @@ class Input {
 		addEventListener("keyup", (event) => {this.keyup(event)})
 		addEventListener("wheel", (event) => {this.wheel(event)})
 		addEventListener("paste", (event) => {this.paste(event)})
+		addEventListener("contextmenu", (event) => {this.contextmenu(event)})
 	}
 	setGlobals() {
 		window.keys = this.keys
@@ -60,6 +61,9 @@ class Input {
 	}
 	checkInputs(event) {
 
+	}
+	contextmenu(event) {
+		event.preventDefault()
 	}
 	cistart() {
 		if (this.focused) {
@@ -105,6 +109,7 @@ class Input {
 		this.mouse.x = event.clientX
 		this.mouse.y = event.clientY
 		this.onClick(event)
+		event.preventDefault()
 	}
 	mouseMove(event) {
 		this.mouse.x = event.clientX
