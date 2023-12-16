@@ -550,6 +550,7 @@ class UI {
             textO
             textSize = 0
             bgColour = [0, 0, 0, 1]
+            bgAlpha = 1
             visHeight = 0
             visWidth = 0
             mulVel = 0
@@ -596,11 +597,13 @@ class UI {
                 }
             }
             draw() {
+                ctx.globalAlpha *= this.bgAlpha
                 if (this.type == "rect") {
                     ui.rect(this.x, this.y, this.visWidth, this.visHeight, this.bgColour)
                 } else if (this.type == "img") {
                     ui.img(this.x, this.y, this.visWidth, this.visHeight, this.img, this.clip)
                 }
+                ctx.globalAlpha /= this.bgAlpha
                 if (this.scaleText) {
                     ui.text(this.x + this.textOff, this.y, this.textSize * ((this.visWidth/this.width + this.visHeight/this.height) / 2), this.text, {align: "center", colour: this.colour})
                 } else {
