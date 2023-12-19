@@ -16,6 +16,11 @@ class Utils {
         window.mulv3 = this.mulv3
         window.divv3 = this.divv3
 
+        window.addvl3 = this.addvl3
+        window.subvl3 = this.subvl3
+        window.mulvl3 = this.mulvl3
+        window.divvl3 = this.divvl3
+
         window.rotv2 = this.rotv2
         window.rotv3 = this.rotv3
     }
