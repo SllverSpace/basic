@@ -78,6 +78,19 @@ class Utils {
         return {x:v1.x/v2.x, y: v1.y/v2.y, z: v1.z/v2.z}
     }
 
+    addvl3(v1, v2) {
+        return [v1[0]+v2[0], v1[1]+v2[1], v1[2]+v2[2]]
+    }
+    subvl3(v1, v2) {
+        return [v1[0]-v2[0], v1[1]-v2[1], v1[2]-v2[2]]
+    }
+    mulvl3(v1, v2) {
+        return [v1[0]*v2[0], v1[1]*v2[1], v1[2]*v2[2]]
+    }
+    divvl3(v1, v2) {
+        return [v1[0]/v2[0], v1[1]/v2[1], v1[2]/v2[2]]
+    }
+
     rotv2(vec, rot) {
         return {x: vec.x*Math.cos(rot) - vec.y*Math.cos(rot), y: vec.x*Math.sin(rot) + vec.y*Math.sin(rot)}
     }
