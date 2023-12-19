@@ -78,19 +78,19 @@ class Utils {
         return {x:v1.x/v2.x, y: v1.y/v2.y, z: v1.z/v2.z}
     }
 
-    addvl3(v1, v2) {
+    addl3(v1, v2) {
         v1[0] += v2[0]; v1[1] += v2[1]; v1[2] += v2[2]
         return v1
     }
-    subvl3(v1, v2) {
+    subl3(v1, v2) {
         v1[0] -= v2[0]; v1[1] -= v2[1]; v1[2] -= v2[2]
         return v1
     }
-    mulvl3(v1, v2) {
+    mull3(v1, v2) {
         v1[0] *= v2[0]; v1[1] *= v2[1]; v1[2] *= v2[2]
         return v1
     }
-    divvl3(v1, v2) {
+    divl3(v1, v2) {
         v1[0] /= v2[0]; v1[1] /= v2[1]; v1[2] /= v2[2]
         return v1
     }
