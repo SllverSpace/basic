@@ -43,8 +43,8 @@ class UI {
         window.canvas.width = window.innerWidth
         window.canvas.height = window.innerHeight
         document.body.style.cursor = ""
-        // document.body.style.zoom = "100%"
-        // window.scrollTo(0, 0)
+        document.body.style.zoom = "100%"
+        window.scrollTo(0, 0)
     }
     getSu() {
         let w = window.innerWidth
