@@ -97,7 +97,7 @@ class Utils {
     }
 
     rotv2(vec, rot) {
-        return {x: vec.x*Math.sin(rot) + vec.y*Math.sin(rot+Math.PI/2), y: vec.x*Math.cos(rot) - vec.y*Math.cos(rot+Math.PI/2)}
+        return {x: vec.x*Math.sin(rot) + vec.y*Math.sin(rot+Math.PI/2), y: vec.x*Math.cos(rot) + vec.y*Math.cos(rot+Math.PI/2)}
     }
     rotv3(vec, rot) {
         let x1 = vec.x * Math.cos(rot.z) - vec.y * Math.sin(rot.z)
