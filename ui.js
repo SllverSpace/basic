@@ -685,6 +685,11 @@ class UI {
                     this.off.y = this.bounds.maxY
                 }
             }
+            scroll(x, y) {
+                this.off.x -= x
+                this.off.y -= y
+                this.update()
+            }
             hovered() {
                 return this.hasPoint(input.mouse.x, input.mouse.y)
             }
@@ -702,12 +707,19 @@ class UI {
                     this.vis = utils.lerp(this.vis, this.tVis, delta*10)
                 }
 
+                let scrollSize = 1
+                if (Math.abs(this.bounds.maxY-this.bounds.minY)+this.height > this.height) {
+                    scrollSize = this.height/(Math.abs(this.bounds.maxY-this.bounds.minY) + this.height)
+                }
+
+                scrollSize *= this.height-off.y*2
+
                 this.tVis = 0
-                if (this.hasPoint(input.mouse.x, input.mouse.y) && input.mouse.x-this.x > this.width/2-30 && input.mouse.y-this.y+this.height/2 > 10 && input.mouse.y-this.y+this.height/2 < this.height-10) {
+                if (this.hasPoint(input.mouse.x, input.mouse.y) && input.mouse.x-this.x > this.width/2-off.x*2-size && input.mouse.y-this.y+this.height/2 > off.y/2 && input.mouse.y-this.y+this.height/2 < this.height-off.y/2) {
                     this.tVis = 0.9
                     this.stop = 0.5
-                    if (input.mouse.ldown) {
-                        this.off.y = (input.mouse.y-this.y+this.height/2-size) / (this.height-size*2) * this.bounds.minY
+                    if (input.mouse.ldown && input.mouse.y-this.y+this.height/2-scrollSize/2 > off.y/2 && input.mouse.y-this.y+this.height/2 < this.height-off.y/2-scrollSize/2) {
+                        this.off.y = (input.mouse.y-this.y+this.height/2-size - scrollSize/2) / (this.height-size*2-scrollSize) * this.bounds.minY
                     }
                 }
 
@@ -719,7 +731,21 @@ class UI {
 
                 ui.rect(this.width-off.x-size/2, this.height/2, size, this.height-off.y*2, [150, 150, 150, this.vis])
 
-                ui.circle(this.width-off.x-size/2, Math.abs(this.off.y)/Math.abs(this.bounds.minY) * (this.height-off.y*2) + off.y, size*0.75, [200, 200, 200, this.vis])
+                let x2 = this.width-off.x-size/2
+                let y2 = Math.abs(this.off.y)/Math.abs(this.bounds.minY) * (this.height-off.y*2 - scrollSize) + off.y + scrollSize/2
+                if (ui.relative && ui.canvas) {
+                    x2 += ui.canvas.x-ui.canvas.width/2
+                    y2 += ui.canvas.y-ui.canvas.height/2
+                }
+                ctx.beginPath()
+                ctx.arc(x2, y2-scrollSize/2, size*0.75, 0, Math.PI, true)
+                ctx.lineTo(x2-size*1.5/2, y2+scrollSize/2)
+                ctx.arc(x2, y2+scrollSize/2, size*0.75, Math.PI, 0, true)
+                ctx.lineTo(x2+size*1.5/2, y2-scrollSize/2)
+                ctx.restore()
+                ctx.fillStyle = `rgba(200, 200, 200, ${this.vis})`
+                ctx.fill()
+                // ui.circle(x2, , size*0.75, [200, 200, 20 0, this.vis])
                 ui.doScroll = oldS
             }
             drawBorder(size, colour) {
