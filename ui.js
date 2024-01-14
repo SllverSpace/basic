@@ -144,7 +144,7 @@ class UI {
             // }
 
             ctx.strokeStyle = `rgba(${outlineColour[0]},${outlineColour[1]},${outlineColour[2]},${outlineColour[3]})` 
-            ctx.strokeText(fixed, x, y + i*size*spacingMul)
+            ctx.strokeText(fixed, x, y + i*size*this.spacingMul)
             
             ctx.fillStyle = `rgba(${colour[0]*this.textShadow.multiply},${colour[1]*this.textShadow.multiply},${colour[2]*this.textShadow.multiply},${colour[3]*this.textShadow.multiply})`
             ctx.strokeStyle = `rgba(${outlineColour[0]*this.textShadow.multiply},${outlineColour[1]*this.textShadow.multiply},${outlineColour[2]*this.textShadow.multiply},${outlineColour[3]*this.textShadow.multiply})`         
@@ -155,23 +155,23 @@ class UI {
                         amt = Math.round(outlineSize/3)
                     }
                     if (dir == "left") {
-                        ctx.strokeText(fixed, x - amt, y + i*size*spacingMul)
-                        ctx.fillText(fixed, x - amt, y + i*size*spacingMul)
+                        ctx.strokeText(fixed, x - amt, y + i*size*this.spacingMul)
+                        ctx.fillText(fixed, x - amt, y + i*size*this.spacingMul)
                     } else if (dir == "right") {
-                        ctx.strokeText(fixed, x + amt, y + i*size*spacingMul)
-                        ctx.fillText(fixed, x + amt, y + i*size*spacingMul)
+                        ctx.strokeText(fixed, x + amt, y + i*size*this.spacingMul)
+                        ctx.fillText(fixed, x + amt, y + i*size*this.spacingMul)
                     } else if (dir == "top") {
-                        ctx.strokeText(fixed, x, y - amt + i*size*spacingMul)
-                        ctx.fillText(fixed, x, y - amt + i*size*spacingMul)
+                        ctx.strokeText(fixed, x, y - amt + i*size*this.spacingMul)
+                        ctx.fillText(fixed, x, y - amt + i*size*this.spacingMul)
                     } else if (dir == "bottom") {
-                        ctx.strokeText(fixed, x, y + amt + i*size*spacingMul)
-                        ctx.fillText(fixed, x, y + amt + i*size*spacingMul)
+                        ctx.strokeText(fixed, x, y + amt + i*size*this.spacingMul)
+                        ctx.fillText(fixed, x, y + amt + i*size*this.spacingMul)
                     }
                 }
             }
             
             ctx.fillStyle = `rgba(${colour[0]},${colour[1]},${colour[2]},${colour[3]})`
-            ctx.fillText(fixed, x, y + i*size*spacingMul)
+            ctx.fillText(fixed, x, y + i*size*this.spacingMul)
             
             let width = ctx.measureText(fixed).width
             if (width > maxWidth) {
