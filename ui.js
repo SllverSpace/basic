@@ -621,13 +621,13 @@ class UI {
             value = 50
             maxValue = 100
             handleImg
-            handleClip = {use: false, x: 0, y: 0, width: 0, height: 0}
+            handleClip = "none"
             handleWidth = 0
             handleHeight = 0
             bound = 3*4
             gOff = {x: 0, y: 0}
             img
-            clip
+            clip = "none"
             constructor(img, handleImg, clip="none", handleClip="none") {
                 super()
                 this.handleImg = handleImg
@@ -635,9 +635,10 @@ class UI {
                 this.img = img
                 this.clip = clip
             }
-            setH(width, height) {
+            set2(width, height, bound) {
                 this.handleWidth = width
                 this.handleHeight = height
+                this.bound = bound
             }
             hovered() {
                 return this.hasPoint(input.mouse.x-this.gOff.x, input.mouse.y-this.gOff.y)
