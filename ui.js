@@ -628,7 +628,7 @@ class UI {
             gOff = {x: 0, y: 0}
             img
             clip
-            constructor(img, handleImg, clip={use: false, x: 0, y: 0, width: 0, height: 0}, handleClip={use: false, x: 0, y: 0, width: 0, height: 0}) {
+            constructor(img, handleImg, clip="none", handleClip="none") {
                 super()
                 this.handleImg = handleImg
                 this.handleClip = handleClip
