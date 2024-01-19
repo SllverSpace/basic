@@ -8,6 +8,7 @@ class UI {
     textShadow = {top: 0, bottom: 0, left: 0, right: 0, multiply: 0.5}
     targetSize = {x: 1500, y: 1000}
     spacingMul = 1
+    time = 0
     setFont(font, fontPath="") {
         this.fontLoaded = false
         this.font = font
@@ -46,6 +47,7 @@ class UI {
         document.body.style.cursor = ""
         document.body.style.zoom = "100%"
         window.scrollTo(0, 0)
+        if (window.delta) this.time += window.delta
     }
     getSu() {
         let w = window.innerWidth
@@ -200,6 +202,56 @@ class UI {
             ctx.stroke()
         }
         ctx.fill()
+    }
+    line(x1, y1, x2, y2, size, colour) {
+        if (this.relative && this.canvas) {
+            x1 += this.canvas.x-this.canvas.width/2
+            y1 += this.canvas.y-this.canvas.height/2
+            x2 += this.canvas.x-this.canvas.width/2
+            y2 += this.canvas.y-this.canvas.height/2
+        }
+        if (this.doScroll && this.canvas) {
+            x1 += this.canvas.off.x
+            y1 += this.canvas.off.y
+            x2 += this.canvas.off.x
+            y2 += this.canvas.off.y
+        }
+        ctx.beginPath()
+        ctx.moveTo(x1, y1)
+        ctx.lineTo(x2, y2)
+        ctx.strokeStyle = `rgba(${colour[0]},${colour[1]},${colour[2]},${colour[3]})`
+        ctx.lineWidth = size
+        ctx.stroke()
+    }
+    path(poses, size, colour) {
+        let sx = poses[0][0]
+        let sy = poses[0][1]
+        if (this.relative && this.canvas) {
+            sx += this.canvas.x-this.canvas.width/2
+            sy += this.canvas.y-this.canvas.height/2
+        }
+        if (this.doScroll && this.canvas) {
+            sx += this.canvas.off.x
+            sy += this.canvas.off.y
+        }
+        ctx.beginPath()
+        ctx.moveTo(sx, sy)
+        for (let i = 1; i < poses.length; i++) {
+            let x = poses[i][0]
+            let y = poses[i][1]
+            if (this.relative && this.canvas) {
+                x += this.canvas.x-this.canvas.width/2
+                y += this.canvas.y-this.canvas.height/2
+            }
+            if (this.doScroll && this.canvas) {
+                x += this.canvas.off.x
+                y += this.canvas.off.y
+            }
+            ctx.lineTo(x, y)
+        }
+        ctx.strokeStyle = `rgba(${colour[0]},${colour[1]},${colour[2]},${colour[3]})`
+        ctx.lineWidth = size
+        ctx.stroke()
     }
     measureText(size, text, options={}) {
         if (!this.fontLoaded) { return {lines: 0, width: 0} }
@@ -657,6 +709,129 @@ class UI {
             draw() {
                 ui.img(this.x, this.y, this.width, this.height, this.img, this.clip)
                 ui.img(this.x-this.width/2+this.bound + (this.width-this.bound*2) * (this.value/this.maxValue), this.y, this.handleWidth, this.handleHeight, this.handleImg, this.handleClip)
+            }
+        }
+    }
+    get Dropdown() {
+        return class extends ui.Object2D {
+            items = []
+            bgColour = [127, 127, 127, 1]
+            outlineColour = [0, 0, 0, 1]
+            outlineSize = 0
+            textSize = 0
+            drop = 0
+            open = false
+            default = 0
+            selected = 0
+            colours = []
+            selectedt = ""
+            angle = Math.PI
+            constructor(items, def=0) {
+                super()
+                this.default = def
+                this.selected = def
+                this.items = items
+                this.selectedt = this.items[this.selected]
+            }
+            hovered() {
+                if (!this.open) {
+                    return ui.hovered(this.x, this.y, this.width, this.height)
+                } else {
+                    return ui.hovered(this.x, this.y + this.items.length*this.height/2, this.width, this.height+this.items.length*this.height)
+                }
+            }
+            changed(value) {
+
+            }
+            hoveredBase() {
+                return ui.hovered(this.x, this.y, this.width, this.height)
+            }
+            basic() {
+                if (input.mouse.lclick && this.hoveredBase()) {
+                    this.open = !this.open
+                }
+                if (input.mouse.lclick && this.open && !this.hovered()) {
+                    this.open = false
+                }
+                if (this.open) {
+                    this.drop = utils.lerp(this.drop, 1, delta*15)
+                    this.angle = utils.lerp(this.angle, Math.PI+Math.PI/2, delta*15)
+                } else {
+                    this.drop = utils.lerp(this.drop, 0, delta*15)
+                    this.angle = utils.lerp(this.angle, Math.PI, delta*15)
+                }
+                for (let i = 0; i < this.items.length; i++) {
+                    let i2 = (this.items.length-1-i)
+                    let y = (i2+1) * this.height * this.drop
+                    if (input.mouse.lclick && this.drop > 0.99 && ui.hovered(this.x, this.y + y, this.width, this.height)) {
+                        if (this.selected != i2) this.changed(this.items[i2])
+                        this.selected = i2
+                        this.selectedt = this.items[this.selected]
+                    }
+                }
+            }
+            set2(textSize, outlineSize) {
+                this.textSize = textSize
+                this.outlineSize = outlineSize
+            }
+            draw() {
+                let lighter = [this.bgColour[0]*1.15, this.bgColour[1]*1.15, this.bgColour[2]*1.15, this.bgColour[3]]
+                let darker = [this.bgColour[0]/1.25, this.bgColour[1]/1.25, this.bgColour[2]/1.25, this.bgColour[3]]
+                let mid = [this.bgColour[0]/1.1, this.bgColour[1]/1.1, this.bgColour[2]/1.1, this.bgColour[3]]
+
+                while (this.colours.length < this.items.length) {
+                    this.colours.push([...this.bgColour])
+                }
+                while (this.colours.length > this.items.length) {
+                    this.colours.splice(this.colours.length-1)
+                }
+
+                let ti = this.items.length-1
+                for (let i = 0; i < this.items.length; i++) {
+                    let i2 = (this.items.length-1-i)
+                    let y = (i2+1) * this.height * this.drop
+                    if (i2 == this.selected) {
+                        if (ui.hovered(this.x, this.y + y, this.width, this.height)) {
+                            this.colours[i2][0] = utils.lerp(this.colours[i2][0], mid[0], delta*15)
+                            this.colours[i2][1] = utils.lerp(this.colours[i2][1], mid[1], delta*15)
+                            this.colours[i2][2] = utils.lerp(this.colours[i2][2], mid[2], delta*15)
+                        } else {
+                            this.colours[i2][0] = utils.lerp(this.colours[i2][0], darker[0], delta*15)
+                            this.colours[i2][1] = utils.lerp(this.colours[i2][1], darker[1], delta*15)
+                            this.colours[i2][2] = utils.lerp(this.colours[i2][2], darker[2], delta*15)
+                        }
+                    } else if (ui.hovered(this.x, this.y + y, this.width, this.height)) {
+                        this.colours[i2][0] = utils.lerp(this.colours[i2][0], lighter[0], delta*15)
+                        this.colours[i2][1] = utils.lerp(this.colours[i2][1], lighter[1], delta*15)
+                        this.colours[i2][2] = utils.lerp(this.colours[i2][2], lighter[2], delta*15)
+                    } else {
+                        this.colours[i2][0] = utils.lerp(this.colours[i2][0], this.bgColour[0], delta*15)
+                        this.colours[i2][1] = utils.lerp(this.colours[i2][1], this.bgColour[1], delta*15)
+                        this.colours[i2][2] = utils.lerp(this.colours[i2][2], this.bgColour[2], delta*15)
+                    }
+                    ui.rect(this.x, this.y + y, this.width, this.height, this.colours[i2])
+                    ui.text(this.x - this.width/2 + this.outlineSize*2, this.y + y, this.textSize, this.items[ti])
+                    ui.line(this.x-this.width/2, this.y + y + this.height/2, this.x+this.width/2, this.y + y + this.height/2, this.outlineSize, darker)
+                    ti--
+                }
+
+                ui.rect(this.x, this.y, this.width, this.height, lighter)
+                ui.text(this.x - this.width/2 + this.outlineSize*2, this.y, this.textSize, this.items[this.selected])
+
+                let mx = this.x + this.width/2 - this.height/2
+                let my = this.y
+                let s = this.height/4
+                let v1 = {x: -s, y: -s/2}
+                let v2 = {x: 0, y: s/2}
+                let v3 = {x: s, y: -s/2}
+                ui.path([[mx + utils.rotv2(v1, this.angle).x, my + utils.rotv2(v1, this.angle).y], [mx + utils.rotv2(v2, this.angle).x, my + utils.rotv2(v2, this.angle).y], [mx + utils.rotv2(v3, this.angle).x, my + utils.rotv2(v3, this.angle).y]], this.outlineSize, this.outlineColour)
+
+                ui.line(this.x-this.width/2, this.y + this.height/2, this.x+this.width/2, this.y + this.height/2, this.outlineSize, darker)
+
+                ui.line(this.x-this.width/2-this.outlineSize/2, this.y-this.height/2, this.x+this.width/2+this.outlineSize/2, this.y-this.height/2, this.outlineSize, this.outlineColour)
+                ui.line(this.x-this.width/2, this.y-this.height/2, this.x-this.width/2, this.y+this.height/2 + this.drop*this.items.length*this.height, this.outlineSize, this.outlineColour)
+                ui.line(this.x+this.width/2, this.y-this.height/2, this.x+this.width/2, this.y+this.height/2 + this.drop*this.items.length*this.height, this.outlineSize, this.outlineColour)
+                ui.line(this.x-this.width/2-this.outlineSize/2, this.y+this.height/2 + this.drop*this.items.length*this.height, this.x+this.width/2 + this.outlineSize/2, this.y+this.height/2 + this.drop*this.items.length*this.height, this.outlineSize, this.outlineColour)
             }
         }
     }
