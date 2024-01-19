@@ -764,9 +764,10 @@ class UI {
                     let i2 = (this.items.length-1-i)
                     let y = (i2+1) * this.height * this.drop
                     if (input.mouse.lclick && this.drop > 0.99 && ui.hovered(this.x, this.y + y, this.width, this.height)) {
-                        if (this.selected != i2) this.changed(this.items[i2])
+                        let newv = this.selected != i2
                         this.selected = i2
                         this.selectedt = this.items[this.selected]
+                        if (newv) this.changed(this.items[i2])
                     }
                 }
             }
