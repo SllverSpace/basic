@@ -345,11 +345,10 @@ class UI {
             dataA[i+2] = n[2]
             dataA[i+3] = n[3]
         }
-        createImageBitmap(dataA, img.width, img.height).then((imageBitmap) => {
-            let img2 = new Image()
-            img2.src = imageBitmap
-            return img2
-        })
+        ctx2.putImageData(imgData, 0, 0)
+        let img2 = new Image()
+        img2.src = canvas2.toDataURL()
+        return img2
     }
     link(x, y, size, text, options={}) {
         if (!this.fontLoaded) { return {lines: 0, width: 0} }
