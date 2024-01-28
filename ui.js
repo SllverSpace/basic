@@ -336,7 +336,7 @@ class UI {
         canvas2.height = img.height
         let ctx2 = canvas2.getContext("2d")
         ctx2.drawImage(img, 0, 0, canvas2.width, canvas2.height)
-        var imgData = getImageData(0, 0, canvas2.width, canvas2.height)
+        var imgData = ctx2.getImageData(0, 0, canvas2.width, canvas2.height)
         var dataA = imgData.data
         for (let i = 0; i < dataA.length; i += 4) {
             let n = effect(dataA[i], dataA[i+1], dataA[i+2], dataA[i+3])
