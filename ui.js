@@ -345,6 +345,7 @@ class UI {
             dataA[i+2] = n[2]
             dataA[i+3] = n[3]
         }
+        return imgData
     }
     cImg(x, y, width, height, img, clip="none") {
         if (this.relative && this.canvas) {
