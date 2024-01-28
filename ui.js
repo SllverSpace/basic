@@ -330,6 +330,47 @@ class UI {
             ctx.drawImage(img, x-width/2, y-height/2, width, height)
         }
     }
+    shadeImg(img, effect = (r, g, b, a) => {}) {
+        let canvas2 = document.createElement("canvas")
+        canvas2.width = img.width
+        canvas2.height = img.height
+        let ctx2 = canvas2.getContext("2d")
+        ctx2.drawImage(img, 0, 0, canvas2.width, canvas2.height)
+        var imgData = getImageData(0, 0, canvas2.width, canvas2.height)
+        var dataA = imgData.data
+        for (let i = 0; i < dataA.length; i += 4) {
+            let n = effect(dataA[i], dataA[i+1], dataA[i+2], dataA[i+3])
+            dataA[i] = n[0]
+            dataA[i+1] = n[1]
+            dataA[i+2] = n[2]
+            dataA[i+3] = n[3]
+        }
+    }
+    cImg(x, y, width, height, img, clip="none") {
+        if (this.relative && this.canvas) {
+            x += this.canvas.x-this.canvas.width/2
+            y += this.canvas.y-this.canvas.height/2
+        }
+        if (this.doScroll && this.canvas) {
+            x += this.canvas.off.x
+            y += this.canvas.off.y
+        }
+        if (clip == "none") {
+            clip = {use: false}
+        } else {
+            clip = {use: true, x: clip[0], y: clip[1], width: clip[2], height: clip[3]}
+        }
+        x = Math.round(x)
+        y = Math.round(y)
+        width = Math.round(width/2)*2
+        height = Math.round(height/2)*2
+        ctx.imageSmoothingEnabled = false
+        if (clip.use) {
+            ctx.putImageData(img, clip.x, clip.y, clip.width, clip.height, x-width/2, y-height/2, width, height)
+        } else {
+            ctx.putImageData(img, x-width/2, y-height/2, width, height)
+        }
+    }
     link(x, y, size, text, options={}) {
         if (!this.fontLoaded) { return {lines: 0, width: 0} }
 
