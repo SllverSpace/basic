@@ -345,32 +345,11 @@ class UI {
             dataA[i+2] = n[2]
             dataA[i+3] = n[3]
         }
-        return imgData
-    }
-    cImg(x, y, width, height, img, clip="none") {
-        if (this.relative && this.canvas) {
-            x += this.canvas.x-this.canvas.width/2
-            y += this.canvas.y-this.canvas.height/2
-        }
-        if (this.doScroll && this.canvas) {
-            x += this.canvas.off.x
-            y += this.canvas.off.y
-        }
-        if (clip == "none") {
-            clip = {use: false}
-        } else {
-            clip = {use: true, x: clip[0], y: clip[1], width: clip[2], height: clip[3]}
-        }
-        x = Math.round(x)
-        y = Math.round(y)
-        width = Math.round(width/2)*2
-        height = Math.round(height/2)*2
-        ctx.imageSmoothingEnabled = false
-        if (clip.use) {
-            ctx.putImageData(img, clip.x, clip.y, clip.width, clip.height, x-width/2, y-height/2, width, height)
-        } else {
-            ctx.putImageData(img, x-width/2, y-height/2, width, height)
-        }
+        createImageBitmap(dataA, img.width, img.height).then((imageBitmap) => {
+            let img2 = new Image()
+            img2.src = imageBitmap
+            return img2
+        })
     }
     link(x, y, size, text, options={}) {
         if (!this.fontLoaded) { return {lines: 0, width: 0} }
