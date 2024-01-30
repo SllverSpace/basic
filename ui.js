@@ -381,7 +381,15 @@ class UI {
         
         return [x2, y, width, size]
     }
-    hovered(x, y, width, height) {
+    hovered(x, y, width, height, relative=false, doScroll=false) {
+        if (relative && this.canvas) {
+            x += this.canvas.x-this.canvas.width/2
+            y += this.canvas.y-this.canvas.height/2
+        }
+        if (doScroll && this.canvas) {
+            x += this.canvas.off.x
+            y += this.canvas.off.y
+        }
         return (
             input.mouse.x > x-width/2 && input.mouse.x < x+width/2 &&
             input.mouse.y > y-height/2 && input.mouse.y < y+height/2
