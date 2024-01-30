@@ -305,7 +305,7 @@ class UI {
         }
         return {lines: lines.length, width: maxWidth}
     }
-    img(x, y, width, height, img, clip="none") {
+    img(x, y, width, height, img, clip="none", roundV=true) {
         if (this.relative && this.canvas) {
             x += this.canvas.x-this.canvas.width/2
             y += this.canvas.y-this.canvas.height/2
@@ -319,10 +319,12 @@ class UI {
         } else {
             clip = {use: true, x: clip[0], y: clip[1], width: clip[2], height: clip[3]}
         }
-        x = Math.round(x)
-        y = Math.round(y)
-        width = Math.round(width/2)*2
-        height = Math.round(height/2)*2
+        if (roundV) {
+            x = Math.round(x)
+            y = Math.round(y)
+            width = Math.round(width/2)*2
+            height = Math.round(height/2)*2
+        }
         ctx.imageSmoothingEnabled = false
         if (clip.use) {
             ctx.drawImage(img, clip.x, clip.y, clip.width, clip.height, x-width/2, y-height/2, width, height)
