@@ -347,7 +347,7 @@ class UI {
             dataA[i+1] = n[1]
             dataA[i+2] = n[2]
             dataA[i+3] = n[3]
-        }s
+        }
         ctx2.putImageData(imgData, 0, 0)
         let img2 = new Image()
         img2.src = canvas2.toDataURL()
