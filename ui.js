@@ -85,6 +85,7 @@ class UI {
     }
     text(x, y, size, text, options={}) {
         if (!this.fontLoaded) { return {lines: 0, width: 0} }
+        text = text.toString()
 
         var {align="left", colour=[255, 255, 255, 1], outlineColour=[0, 0, 0, 1], outlineSize="auto", wrap=-1} = options
 
