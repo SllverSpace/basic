@@ -306,6 +306,7 @@ class UI {
         return {lines: lines.length, width: maxWidth}
     }
     img(x, y, width, height, img, clip="none", roundV=true) {
+        if (!img) return
         if (this.relative && this.canvas) {
             x += this.canvas.x-this.canvas.width/2
             y += this.canvas.y-this.canvas.height/2
@@ -333,6 +334,7 @@ class UI {
         }
     }
     shadeImg(img, effect = (r, g, b, a) => {}) {
+        return new Promise((resolve, reject))
         let canvas2 = document.createElement("canvas")
         canvas2.width = img.width
         canvas2.height = img.height
@@ -346,7 +348,7 @@ class UI {
             dataA[i+1] = n[1]
             dataA[i+2] = n[2]
             dataA[i+3] = n[3]
-        }
+        }s
         ctx2.putImageData(imgData, 0, 0)
         let img2 = new Image()
         img2.src = canvas2.toDataURL()
