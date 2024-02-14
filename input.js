@@ -271,7 +271,20 @@ class Input {
 	wheel(event) {
 		this.scroll(event.deltaX, event.deltaY)
 	}
-	updateInput() {
+	updateInput(debug=false) {
+
+		if (debug) {
+			if (this.mouse.lclick) {
+				this.startP = {x: this.mouse.x, y: this.mouse.y}
+			}
+			if (this.mouse.ldown) {
+				let mid = {x: this.startP.x+(this.mouse.x-this.startP.x)/2, y: this.startP.y+(this.mouse.y-this.startP.y)/2}
+				ui.rect(mid.x, mid.y, this.mouse.x-this.startP.x, this.mouse.y-this.startP.y, [200, 200, 200, 0.2], 5*su, [100, 100, 100, 0.2])
+				ui.text(mid.x, mid.y, 20*su, `(${mid.x/su}, ${mid.y/su})`)
+			}
+		}
+
+
 		this.mouse.lclick = false
 		this.mouse.rclick = false
 		this.jKeys = {}

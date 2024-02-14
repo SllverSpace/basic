@@ -22,7 +22,7 @@ function update(timestamp) {
 
     dropdown.draw()
 
-    input.updateInput()
+    input.updateInput(true)
 }
 
 input.checkInputs = (event) => {
