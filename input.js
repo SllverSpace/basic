@@ -289,10 +289,15 @@ class Input {
 			}
 			if (this.mouse.ldown) {
 				let mid = {x: this.startP.x+(this.mouse.x-this.startP.x)/2, y: this.startP.y+(this.mouse.y-this.startP.y)/2}
+				ui.text(this.startP.x, this.startP.y, 20*su, `(${Math.round(this.startP.x/su)}, ${Math.round(this.startP.y/su)})`, {align: "center"})
+				ui.text(this.mouse.x, this.mouse.y, 20*su, `(${Math.round(this.mouse.x/su)}, ${Math.round(this.mouse.y/su)})`, {align: "center"})
 				ui.rect(mid.x, mid.y, this.mouse.x-this.startP.x, this.mouse.y-this.startP.y, [200, 200, 200, 0.2], 5*su, [100, 100, 100, 0.2])
 				ui.text(mid.x, mid.y, 20*su, `(${Math.round(mid.x/su)}, ${Math.round(mid.y/su)})`, {align: "center"})
+
 				ui.text(mid.x, this.startP.y-15*su, 20*su, Math.round(this.mouse.x-this.startP.x), {align: "center"})
+				ui.text(mid.x, this.mouse.y+15*su, 20*su, Math.round(this.mouse.x-this.startP.x), {align: "center"})
 				ui.text(this.startP.x-5*su, mid.y, 20*su, Math.round(this.mouse.y-this.startP.y), {align: "right"})
+				ui.text(this.mouse.x+5*su, mid.y, 20*su, Math.round(this.mouse.y-this.startP.y), {align: "right"})
 
 				if (this.jKeys["KeyC"]) {
 					this.copyText(mid.x+"*su, "+mid.y+"*su, "+(this.mouse.x-this.startP.x)+"*su, "+(this.mouse.y-this.startP.y)+"*su")
