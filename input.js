@@ -10,6 +10,9 @@ class Input {
 	getInput
 	moved = 0
 	downTime = 0
+	startP
+	copyFlash = 0
+	copyFlashA = 0
 	constructor() {
 		this.getInput = document.createElement("textarea")
 		this.getInput.style.position = "absolute"
@@ -273,14 +276,28 @@ class Input {
 	}
 	updateInput(debug=false) {
 
-		if (debug) {
+		this.copyFlash -= window.delta
+		if (this.copyFlash > 0) {
+			this.copyFlashA = utils.lerp(this.copyFlashA, 1)
+		} else {
+			this.copyFlashA = utils.lerp(this.copyFlashA, 0)
+		}
+
+		if (debug && this.keys["ShiftLeft"]) {
 			if (this.mouse.lclick) {
 				this.startP = {x: this.mouse.x, y: this.mouse.y}
 			}
 			if (this.mouse.ldown) {
 				let mid = {x: this.startP.x+(this.mouse.x-this.startP.x)/2, y: this.startP.y+(this.mouse.y-this.startP.y)/2}
 				ui.rect(mid.x, mid.y, this.mouse.x-this.startP.x, this.mouse.y-this.startP.y, [200, 200, 200, 0.2], 5*su, [100, 100, 100, 0.2])
-				ui.text(mid.x, mid.y, 20*su, `(${mid.x/su}, ${mid.y/su})`)
+				ui.text(mid.x, mid.y, 20*su, `(${Math.round(mid.x/su)}, ${Math.round(mid.y/su)})`, {align: "center"})
+				ui.text(mid.x, this.startP.y-15*su, 20*su, Math.round(this.mouse.x-this.startP.x), {align: "center"})
+				ui.text(this.startP.x-5*su, mid.y, 20*su, Math.round(this.mouse.y-this.startP.y), {align: "right"})
+
+				if (this.jKeys["KeyC"]) {
+					this.copyText(mid.x+"*su, "+mid.y+"*su, "+(this.mouse.x-this.startP.x)+"*su, "+(this.mouse.y-this.startP.y)+"*su")
+					this.copyFlash = 1
+				}
 			}
 		}
 
