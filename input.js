@@ -300,7 +300,7 @@ class Input {
 				ui.text(this.mouse.x+5*su, mid.y, 20*su, Math.round(this.mouse.y-this.startP.y), {align: "right"})
 
 				if (this.jKeys["KeyC"]) {
-					this.copyText(mid.x+"*su, "+mid.y+"*su, "+(this.mouse.x-this.startP.x)+"*su, "+(this.mouse.y-this.startP.y)+"*su")
+					this.copyText(mid.x+"*su, "+mid.y+"*su, "+Math.abs(this.mouse.x-this.startP.x)+"*su, "+Math.abs(this.mouse.y-this.startP.y)+"*su")
 					this.copyFlash = 1
 				}
 			}
