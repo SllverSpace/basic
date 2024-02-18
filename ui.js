@@ -10,6 +10,7 @@ class UI {
     spacingMul = 1
     time = 0
     fontSizeMul = 1
+    images = {}
     setFont(font, fontPath="", fontSizeMul=1) {
         this.fontLoaded = false
         this.font = font
@@ -67,6 +68,16 @@ class UI {
         let img = new Image()
         img.src = src
         return img
+    }
+    getImg(src) {
+        if (src in images) {
+            return images[src]
+        } else {
+            let img = new Image()
+            img.src = src
+            images[src] = img
+            return images[src]
+        }
     }
     rect(x, y, width, height, colour=[0, 0, 0, 1], outlineSize=0, outlineColour=[0, 0, 0, 1]) {
         if (this.relative && this.canvas) {
