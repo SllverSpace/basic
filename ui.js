@@ -70,13 +70,13 @@ class UI {
         return img
     }
     getImg(src) {
-        if (src in images) {
-            return images[src]
+        if (src in this.images) {
+            return this.images[src]
         } else {
             let img = new Image()
             img.src = src
-            images[src] = img
-            return images[src]
+            this.images[src] = img
+            return this.images[src]
         }
     }
     rect(x, y, width, height, colour=[0, 0, 0, 1], outlineSize=0, outlineColour=[0, 0, 0, 1]) {
