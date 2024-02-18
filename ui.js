@@ -9,7 +9,8 @@ class UI {
     targetSize = {x: 1500, y: 1000}
     spacingMul = 1
     time = 0
-    setFont(font, fontPath="") {
+    fontSizeMul = 1
+    setFont(font, fontPath="", fontSizeMul=1) {
         this.fontLoaded = false
         this.font = font
         if (font == "font") {
@@ -29,6 +30,7 @@ class UI {
         } else {
             this.fontLoaded = true
         }
+        this.fontSizeMul = fontSizeMul
     }
     setC(canvas) {
         ctx.restore()
@@ -86,6 +88,7 @@ class UI {
     text(x, y, size, text, options={}) {
         if (!this.fontLoaded) { return {lines: 0, width: 0} }
         if (!text) return
+        size *= this.fontSizeMul
         text = text.toString()
 
         var {align="left", colour=[255, 255, 255, 1], outlineColour=[0, 0, 0, 1], outlineSize="auto", wrap=-1} = options
@@ -257,6 +260,7 @@ class UI {
     }
     measureText(size, text, options={}) {
         if (!this.fontLoaded) { return {lines: 0, width: 0} }
+        size *= this.fontSizeMul
 
         var {outlineSize="auto", wrap=-1} = options
 
