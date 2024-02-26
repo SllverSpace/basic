@@ -275,8 +275,6 @@ class Input {
 		this.scroll(event.deltaX/ui.scale, event.deltaY/ui.scale)
 	}
 	updateInput(debug=false) {
-		if (input.keys["ShiftLeft"]) ui.rect(input.mouse.x, input.mouse.y, 50*su, 50*su, [255, 255, 255, 1])
-
 		this.copyFlash -= window.delta
 		if (this.copyFlash > 0) {
 			this.copyFlashA = utils.lerp(this.copyFlashA, 1)
