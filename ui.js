@@ -133,7 +133,7 @@ class UI {
         let dirs = ["top", "bottom", "left", "right"]
         let simple = wrap == -1
         let amt = 0
-        let lw = ctx.measureText(text)
+        let lw = ctx.measureText(text).width
         if (!simple) simple = lw < wrap
         if (simple) {
             ctx.strokeStyle = `rgba(${outlineColour[0]},${outlineColour[1]},${outlineColour[2]},${outlineColour[3]})` 
