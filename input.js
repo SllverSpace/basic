@@ -149,7 +149,7 @@ class Input {
 
 			this.moved += Math.abs((deltaMove.x+deltaMove.y)/2)
 
-			this.scroll(-deltaMove.x, -deltaMove.y)
+			this.scroll(-deltaMove.x/ui.scale, -deltaMove.y/ui.scale)
 		}
 		
 		this.mouse.x = event.touches[0].clientX/ui.scale
@@ -272,7 +272,7 @@ class Input {
 		delete this.keysRaw[event.key]
 	}
 	wheel(event) {
-		this.scroll(event.deltaX, event.deltaY)
+		this.scroll(event.deltaX/ui.scale, event.deltaY/ui.scale)
 	}
 	updateInput(debug=false) {
 		if (input.keys["ShiftLeft"]) ui.rect(input.mouse.x, input.mouse.y, 50*su, 50*su, [255, 255, 255, 1])
