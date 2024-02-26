@@ -132,6 +132,7 @@ class UI {
 
         let dirs = ["top", "bottom", "left", "right"]
         let simple = wrap == -1
+        let amt = 0
         let lw = ctx.measureText(text)
         if (!simple) simple = lw < wrap
         if (simple) {
@@ -202,7 +203,6 @@ class UI {
                 maxWidth = w
             }
         }
-        let amt = 0
         for (let i in lines) {
             let fixed = lines[i]
 
