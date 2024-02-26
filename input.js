@@ -109,14 +109,14 @@ class Input {
 			this.mouse.rclick = true
 			this.mouse.rdown = true
 		}
-		this.mouse.x = event.clientX
-		this.mouse.y = event.clientY
+		this.mouse.x = event.clientX/ui.scale
+		this.mouse.y = event.clientY/ui.scale
 		this.onClick(event)
 		event.preventDefault()
 	}
 	mouseMove(event) {
-		this.mouse.x = event.clientX
-		this.mouse.y = event.clientY
+		this.mouse.x = event.clientX/ui.scale
+		this.mouse.y = event.clientY/ui.scale
 	}
 	mouseUp(event) {
 		this.mouse.ldown = false
@@ -124,7 +124,7 @@ class Input {
 	}
 	touchStart(event) {
 		for (let touch of event.changedTouches) {
-			this.touches[touch.identifier] = {x: touch.clientX, y: touch.clientY}
+			this.touches[touch.identifier] = {x: touch.clientX/ui.scale, y: touch.clientY/ui.scale}
 		}
 
 		this.mouse.ldown = true
@@ -132,35 +132,35 @@ class Input {
 		this.mobile = true
 		this.moved = 0
 		this.downTime = 0
-		this.mouse.x = event.touches[0].clientX
-		this.mouse.y = event.touches[0].clientY
+		this.mouse.x = event.touches[0].clientX/ui.scale
+		this.mouse.y = event.touches[0].clientY/ui.scale
 		event.preventDefault()
 
 		this.touches = {}
 		for (let touch of event.touches) {
-			this.touches[touch.identifier] = {x: touch.clientX, y: touch.clientY}
+			this.touches[touch.identifier] = {x: touch.clientX/ui.scale, y: touch.clientY/ui.scale}
 		}
 	}
 	touchMove(event) {
 		for (let touch of event.changedTouches) {
-			let deltaMove = {x: touch.clientX - this.touches[touch.identifier].x, y: touch.clientY - this.touches[touch.identifier].y}
+			let deltaMove = {x: touch.clientX/ui.scale - this.touches[touch.identifier].x, y: touch.clientY/ui.scale - this.touches[touch.identifier].y}
 
-			this.touches[touch.identifier] = {x: touch.clientX, y: touch.clientY}
+			this.touches[touch.identifier] = {x: touch.clientX/ui.scale, y: touch.clientY/ui.scale}
 
 			this.moved += Math.abs((deltaMove.x+deltaMove.y)/2)
 
 			this.scroll(-deltaMove.x, -deltaMove.y)
 		}
 		
-		this.mouse.x = event.touches[0].clientX
-		this.mouse.y = event.touches[0].clientY
+		this.mouse.x = event.touches[0].clientX/ui.scale
+		this.mouse.y = event.touches[0].clientY/ui.scale
 		this.mobile = true
 		this.mouse.has = true
 		this.mouse.ldown = true
 
 		this.touches = {}
 		for (let touch of event.touches) {
-			this.touches[touch.identifier] = {x: touch.clientX, y: touch.clientY}
+			this.touches[touch.identifier] = {x: touch.clientX/ui.scale, y: touch.clientY/ui.scale}
 		}
 	}
 	touchCancel(event) {

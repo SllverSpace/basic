@@ -408,10 +408,6 @@ class UI {
         return [x2, y, width, size]
     }
     hovered(x, y, width, height, relative=false, doScroll=false) {
-        x *= this.scale
-        y *= this.scale
-        width *= this.scale
-        height *= this.scale
         if (relative && this.canvas) {
             x += this.canvas.x-this.canvas.width/2
             y += this.canvas.y-this.canvas.height/2
