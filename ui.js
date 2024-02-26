@@ -129,11 +129,50 @@ class UI {
             outlineSize = size/this.autoOutline
         }
         ctx.lineWidth = outlineSize
+
+        let dirs = ["top", "bottom", "left", "right"]
+        let simple = wrap == -1
+        let lw = ctx.measureText(text)
+        if (!simple) simple = lw < wrap
+        if (simple) {
+            ctx.strokeStyle = `rgba(${outlineColour[0]},${outlineColour[1]},${outlineColour[2]},${outlineColour[3]})` 
+            ctx.strokeText(text, x, y)
+            
+            ctx.fillStyle = `rgba(${colour[0]*this.textShadow.multiply},${colour[1]*this.textShadow.multiply},${colour[2]*this.textShadow.multiply},${colour[3]*this.textShadow.multiply})`
+            ctx.strokeStyle = `rgba(${outlineColour[0]*this.textShadow.multiply},${outlineColour[1]*this.textShadow.multiply},${outlineColour[2]*this.textShadow.multiply},${outlineColour[3]*this.textShadow.multiply})`         
+            for (let dir of dirs) {
+                if (this.textShadow[dir] != 0) {
+                    amt = this.textShadow[dir]
+                    if (amt == "auto") {
+                        amt = Math.round(outlineSize/3)
+                    }
+                    if (dir == "left") {
+                        ctx.strokeText(text, x - amt, y)
+                        ctx.fillText(text, x - amt, y)
+                    } else if (dir == "right") {
+                        ctx.strokeText(text, x + amt, y)
+                        ctx.fillText(text, x + amt, y)
+                    } else if (dir == "top") {
+                        ctx.strokeText(text, x, y - amt)
+                        ctx.fillText(text, x, y - amt)
+                    } else if (dir == "bottom") {
+                        ctx.strokeText(text, x, y + amt)
+                        ctx.fillText(text, x, y + amt)
+                    }
+                }
+            }
+            
+            ctx.fillStyle = `rgba(${colour[0]},${colour[1]},${colour[2]},${colour[3]})`
+            ctx.fillText(text, x, y)
+            return {lines: 1, maxWidth: lw}
+        }
+
         let words = text.split(" ")
         let lines = []
         let line = ""
+        let newLine = false
         for (let word of words) {
-            let newLine = word.includes("\n")
+            newLine = word.includes("\n")
             word = word.replace("\n", "")
             if ((ctx.measureText(line + word + " ").width < wrap || wrap == -1) && !newLine) {
                 line += word + " "
@@ -152,20 +191,20 @@ class UI {
         }
         lines.push(line)
 
+        let maxWidth = 0
         for (let i = 0; i < lines.length; i++) {
-            while (ctx.measureText(lines[i]).width > wrap && wrap != -1) {
+            let w = ctx.measureText(lines[i]).width
+            while (w > wrap && wrap != -1) {
                 lines[i] = lines[i].slice(0, -1)
+                w = ctx.measureText(lines[i]).width
+            }
+            if (w > maxWidth) {
+                maxWidth = w
             }
         }
-        let maxWidth = 0
-        let dirs = ["top", "bottom", "left", "right"]
-        let i2 = 0
-        let links2 = []
+        let amt = 0
         for (let i in lines) {
             let fixed = lines[i]
-            // if (fixed[fixed.length-1] == " ") {
-            //     fixed = fixed.substring(0, fixed.length-1)
-            // }
 
             ctx.strokeStyle = `rgba(${outlineColour[0]},${outlineColour[1]},${outlineColour[2]},${outlineColour[3]})` 
             ctx.strokeText(fixed, x, y + i*size*this.spacingMul)
@@ -174,7 +213,7 @@ class UI {
             ctx.strokeStyle = `rgba(${outlineColour[0]*this.textShadow.multiply},${outlineColour[1]*this.textShadow.multiply},${outlineColour[2]*this.textShadow.multiply},${outlineColour[3]*this.textShadow.multiply})`         
             for (let dir of dirs) {
                 if (this.textShadow[dir] != 0) {
-                    let amt = this.textShadow[dir]
+                    amt = this.textShadow[dir]
                     if (amt == "auto") {
                         amt = Math.round(outlineSize/3)
                     }
@@ -196,11 +235,6 @@ class UI {
             
             ctx.fillStyle = `rgba(${colour[0]},${colour[1]},${colour[2]},${colour[3]})`
             ctx.fillText(fixed, x, y + i*size*this.spacingMul)
-            
-            let width = ctx.measureText(fixed).width
-            if (width > maxWidth) {
-                maxWidth = width
-            }
         }
         return {lines: lines.length, width: maxWidth}
     }
