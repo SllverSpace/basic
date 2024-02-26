@@ -131,7 +131,7 @@ class UI {
         ctx.lineWidth = outlineSize
 
         let dirs = ["top", "bottom", "left", "right"]
-        let simple = wrap == -1
+        let simple = wrap == -1 || text.includes("\n")
         let amt = 0
         let lw = ctx.measureText(text).width
         if (!simple) simple = lw < wrap
