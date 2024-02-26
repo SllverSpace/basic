@@ -24,6 +24,8 @@ function update(timestamp) {
 
     dropdown.draw()
 
+    // ui.rect(input.mouse.x, input.mouse.y, 50*su, 50*su, [255, 255, 255, 1])
+
     input.updateInput(true)
 }
 
