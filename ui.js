@@ -11,6 +11,7 @@ class UI {
     time = 0
     fontSizeMul = 1
     images = {}
+    scale = 0.5
     setFont(font, fontPath="", fontSizeMul=1) {
         this.fontLoaded = false
         this.font = font
@@ -45,16 +46,21 @@ class UI {
         }
     }
     resizeCanvas() {
-        window.canvas.width = window.innerWidth
-        window.canvas.height = window.innerHeight
+        // window.canvas.style.left = -window.innerWidth*(1-this.scale)+"px"
+        // window.canvas.style.top = -window.innerHeight*(1-this.scale)+"px"
+        window.canvas.width = window.innerWidth/this.scale
+        window.canvas.height = window.innerHeight/this.scale
+        window.canvas.style.transform = `scale(${this.scale}, ${this.scale})`
+        window.canvas.style.transformOrigin = "top left"
+        // window.canvas.style.transform = `translate(-${1/this.scale * 100}%, -${1/this.scale * 100}%)`
         document.body.style.cursor = ""
         document.body.style.zoom = "100%"
         window.scrollTo(0, 0)
         if (window.delta) this.time += window.delta
     }
     getSu() {
-        let w = window.innerWidth
-    	let h = window.innerHeight
+        let w = window.canvas.width
+    	let h = window.canvas.height
     
     	let aspect = w / this.targetSize.x
     
@@ -402,6 +408,10 @@ class UI {
         return [x2, y, width, size]
     }
     hovered(x, y, width, height, relative=false, doScroll=false) {
+        x *= this.scale
+        y *= this.scale
+        width *= this.scale
+        height *= this.scale
         if (relative && this.canvas) {
             x += this.canvas.x-this.canvas.width/2
             y += this.canvas.y-this.canvas.height/2
