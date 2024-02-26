@@ -165,7 +165,7 @@ class UI {
             
             ctx.fillStyle = `rgba(${colour[0]},${colour[1]},${colour[2]},${colour[3]})`
             ctx.fillText(text, x, y)
-            return {lines: 1, maxWidth: lw}
+            return {lines: 1, width: lw}
         }
 
         let words = text.split(" ")
