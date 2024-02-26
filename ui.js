@@ -131,10 +131,10 @@ class UI {
         ctx.lineWidth = outlineSize
 
         let dirs = ["top", "bottom", "left", "right"]
-        let simple = wrap == -1 || text.includes("\n")
+        let simple = wrap == -1 && !text.includes("\n")
         let amt = 0
         let lw = ctx.measureText(text).width
-        if (!simple) simple = lw < wrap
+        if (!simple) simple = lw < wrap && !text.includes("\n")
         if (simple) {
             ctx.strokeStyle = `rgba(${outlineColour[0]},${outlineColour[1]},${outlineColour[2]},${outlineColour[3]})` 
             ctx.strokeText(text, x, y)
