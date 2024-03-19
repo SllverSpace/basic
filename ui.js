@@ -967,64 +967,59 @@ class UI {
                 this.offV = 0
                 this.offXT = 0
             }
-            // draw() {
-            //     let a = 1 - Math.abs(this.offX - this.width*0.1) / (this.width*0.2)
+            draw() {
+                let a = 1 - Math.abs(this.offX - this.width*0.1) / (this.width*0.2)
         
-            //     let oldAlpha = ctx.globalAlpha
-            //     if (this.offV < 0) {
-            //         ctx.globalAlpha *= a > 0 ? a : 0
-            //     }
+                let oldAlpha = ctx.globalAlpha
+                if (this.offV < 0) {
+                    ctx.globalAlpha *= a > 0 ? a : 0
+                }
                 
-            //     if (this.invert) {
-            //         this.offX *= -1
-            //         this.textO.align = "right"
-            //     } else {
-            //         this.textO.align = "left"
-            //     }
-        
-            //     if (this.invert) {
-            //         this.bg.x = this.x+this.height/2 + this.offX/2
-            //         this.bg.width = this.width-this.height - this.offX
-            //     } else {
-            //         this.bg.x = this.x-this.height/2 + this.offX/2
-            //         this.bg.width = this.width-this.height + this.offX
+                let align = "left"
+                if (this.invert) {
+                    this.offX *= -1
+                    align = "right"
+                }
+                
+                let x = 0
+                let width = 0
+                if (this.invert) {
+                    x = this.x+this.height/2 + this.offX/2
+                    width = this.width-this.height - this.offX
+                } else {
+                    x = this.x-this.height/2 + this.offX/2
+                    width = this.width-this.height + this.offX
                     
-            //     }
-            //     this.bg.y = this.y
-            //     this.bg.height = this.height
-            //     if (this.invert) {
-            //         this.textO.x = this.x + this.width/2 - this.textSize/2 + this.offX
-            //     } else {
-            //         this.textO.x = this.x - this.width/2 + this.textSize/2 + this.offX
-            //     }
+                }
+
+                ui.rect(x, this.y, width, this.height, this.bgColour)
+                if (this.invert) {
+                    x = this.x + this.width/2 - this.textSize/2 + this.offX
+                } else {
+                    x = this.x - this.width/2 + this.textSize/2 + this.offX
+                }
+
+                ui.text(x, this.y, this.textSize, this.text, {align: align})
                 
-            //     this.textO.y = this.y
-            //     this.textO.size = this.textSize
-            //     this.textO.text = this.text
+                ctx.fillStyle = `rgba(${this.bgColour[0]},${this.bgColour[1]},${this.bgColour[2]},${this.bgColour[3]})`
+                ctx.beginPath()
+                if (this.invert) {
+                    ctx.moveTo(this.x-this.width/2+this.height+0.25 + this.offX, this.y-this.height/2)
+                    ctx.lineTo(this.x-this.width/2 + this.offX, this.y-this.height/2)
+                    ctx.lineTo(this.x-this.width/2+this.height+0.25 + this.offX, this.y+this.height/2)
+                } else {
+                    ctx.moveTo(this.x+this.width/2-this.height-0.25 + this.offX, this.y-this.height/2)
+                    ctx.lineTo(this.x+this.width/2 + this.offX, this.y-this.height/2)
+                    ctx.lineTo(this.x+this.width/2-this.height-0.25 + this.offX, this.y+this.height/2)
+                }
+                ctx.fill()
+                
+                ctx.globalAlpha = oldAlpha
         
-            //     this.bg.colour = this.bgColour
-        
-            //     this.bg.draw(ctx)
-            //     ctx.beginPath()
-            //     if (this.invert) {
-            //         ctx.moveTo(this.x-this.width/2+this.height+0.25 + this.offX, this.y-this.height/2)
-            //         ctx.lineTo(this.x-this.width/2 + this.offX, this.y-this.height/2)
-            //         ctx.lineTo(this.x-this.width/2+this.height+0.25 + this.offX, this.y+this.height/2)
-            //     } else {
-            //         ctx.moveTo(this.x+this.width/2-this.height-0.25 + this.offX, this.y-this.height/2)
-            //         ctx.lineTo(this.x+this.width/2 + this.offX, this.y-this.height/2)
-            //         ctx.lineTo(this.x+this.width/2-this.height-0.25 + this.offX, this.y+this.height/2)
-            //     }
-            //     ctx.fill()
-        
-            //     this.textO.draw()
-        
-            //     ctx.globalAlpha = oldAlpha
-        
-            //     if (this.invert) {
-            //         this.offX *= -1
-            //     }
-            // }
+                if (this.invert) {
+                    this.offX *= -1
+                }
+            }
         }
     }
     get Canvas() {
