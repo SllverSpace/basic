@@ -924,6 +924,109 @@ class UI {
             }
         }
     }
+    get SideButton() {
+        return class extends ui.Button {
+            offX = 0
+            offXT = 0
+            offV = 0
+            invert = false
+            customHover = -1
+            constructor(text) {
+                super("rect", text)
+            }
+            click() {
+                this.offX = this.offXT
+                this.offV = this.customHover != -1 ? -this.customHover*10*delta*120 : -this.width*0.01*delta*120
+            } 
+            basic() {
+                if (this.offV >= 0) {
+                    this.offX += (this.offXT - this.offX) * delta * 10
+                }
+        
+                this.offX += this.offV
+        
+                if (this.offV < 0) {
+                    this.offV += this.customHover != -1 ? this.customHover*10*delta : this.width*0.01*delta
+                    // if (this.offX > this.offXT) {
+                    //     this.offX = this.offXT
+                    //     this.offV = 0
+                    // }
+                } else {
+                    this.offV = 0
+                }
+                
+                if (this.hovered()) {
+                    document.body.style.cursor = "pointer"
+                    this.offXT = this.customHover != -1 ? this.customHover : this.width*0.1
+                } else if (this.offV >= 0) {
+                    this.offXT = 0
+                }
+            }
+            reset() {
+                this.offX = 0
+                this.offV = 0
+                this.offXT = 0
+            }
+            draw(ctx) {
+                let a = 1 - Math.abs(this.offX - this.width*0.1) / (this.width*0.2)
+        
+                let oldAlpha = ctx.globalAlpha
+                if (this.offV < 0) {
+                    ctx.globalAlpha *= a > 0 ? a : 0
+                }
+                
+                if (this.invert) {
+                    this.offX *= -1
+                    this.textO.align = "right"
+                } else {
+                    this.textO.align = "left"
+                }
+        
+                if (this.invert) {
+                    this.bg.x = this.x+this.height/2 + this.offX/2
+                    this.bg.width = this.width-this.height - this.offX
+                } else {
+                    this.bg.x = this.x-this.height/2 + this.offX/2
+                    this.bg.width = this.width-this.height + this.offX
+                    
+                }
+                this.bg.y = this.y
+                this.bg.height = this.height
+                if (this.invert) {
+                    this.textO.x = this.x + this.width/2 - this.textSize/2 + this.offX
+                } else {
+                    this.textO.x = this.x - this.width/2 + this.textSize/2 + this.offX
+                }
+                
+                this.textO.y = this.y
+                this.textO.size = this.textSize
+                this.textO.text = this.text
+        
+                this.bg.colour = this.bgColour
+        
+                this.bg.draw(ctx)
+                ctx.beginPath()
+                if (this.invert) {
+                    ctx.moveTo(this.x-this.width/2+this.height+0.25 + this.offX, this.y-this.height/2)
+                    ctx.lineTo(this.x-this.width/2 + this.offX, this.y-this.height/2)
+                    ctx.lineTo(this.x-this.width/2+this.height+0.25 + this.offX, this.y+this.height/2)
+                } else {
+                    ctx.moveTo(this.x+this.width/2-this.height-0.25 + this.offX, this.y-this.height/2)
+                    ctx.lineTo(this.x+this.width/2 + this.offX, this.y-this.height/2)
+                    ctx.lineTo(this.x+this.width/2-this.height-0.25 + this.offX, this.y+this.height/2)
+                }
+                ctx.fill()
+        
+                this.textO.draw(ctx)
+        
+                ctx.globalAlpha = oldAlpha
+        
+                if (this.invert) {
+                    this.offX *= -1
+                }
+            }
+        }
+    }
     get Canvas() {
         return class extends ui.Object2D {
             colour = [0, 0, 0, 1]
