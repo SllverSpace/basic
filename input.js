@@ -206,6 +206,9 @@ class Input {
 			this.touches[touch.identifier] = {x: touch.clientX, y: touch.clientY}
 		}
 	}
+	keyPress(event) {
+
+	}
 	keydown(event) {
 		let isCmd = event.ctrlKey || event.metaKey
 		if (this.focused) {
@@ -259,6 +262,7 @@ class Input {
 			}
 			this.keysRaw[event.key] = true
 		}
+		this.keyPress()
 		if (event.code == "Tab") {
 			event.preventDefault()
 		}
