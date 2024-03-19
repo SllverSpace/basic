@@ -967,64 +967,64 @@ class UI {
                 this.offV = 0
                 this.offXT = 0
             }
-            draw(ctx) {
-                let a = 1 - Math.abs(this.offX - this.width*0.1) / (this.width*0.2)
+            // draw() {
+            //     let a = 1 - Math.abs(this.offX - this.width*0.1) / (this.width*0.2)
         
-                let oldAlpha = ctx.globalAlpha
-                if (this.offV < 0) {
-                    ctx.globalAlpha *= a > 0 ? a : 0
-                }
+            //     let oldAlpha = ctx.globalAlpha
+            //     if (this.offV < 0) {
+            //         ctx.globalAlpha *= a > 0 ? a : 0
+            //     }
                 
-                if (this.invert) {
-                    this.offX *= -1
-                    this.textO.align = "right"
-                } else {
-                    this.textO.align = "left"
-                }
+            //     if (this.invert) {
+            //         this.offX *= -1
+            //         this.textO.align = "right"
+            //     } else {
+            //         this.textO.align = "left"
+            //     }
         
-                if (this.invert) {
-                    this.bg.x = this.x+this.height/2 + this.offX/2
-                    this.bg.width = this.width-this.height - this.offX
-                } else {
-                    this.bg.x = this.x-this.height/2 + this.offX/2
-                    this.bg.width = this.width-this.height + this.offX
+            //     if (this.invert) {
+            //         this.bg.x = this.x+this.height/2 + this.offX/2
+            //         this.bg.width = this.width-this.height - this.offX
+            //     } else {
+            //         this.bg.x = this.x-this.height/2 + this.offX/2
+            //         this.bg.width = this.width-this.height + this.offX
                     
-                }
-                this.bg.y = this.y
-                this.bg.height = this.height
-                if (this.invert) {
-                    this.textO.x = this.x + this.width/2 - this.textSize/2 + this.offX
-                } else {
-                    this.textO.x = this.x - this.width/2 + this.textSize/2 + this.offX
-                }
+            //     }
+            //     this.bg.y = this.y
+            //     this.bg.height = this.height
+            //     if (this.invert) {
+            //         this.textO.x = this.x + this.width/2 - this.textSize/2 + this.offX
+            //     } else {
+            //         this.textO.x = this.x - this.width/2 + this.textSize/2 + this.offX
+            //     }
                 
-                this.textO.y = this.y
-                this.textO.size = this.textSize
-                this.textO.text = this.text
+            //     this.textO.y = this.y
+            //     this.textO.size = this.textSize
+            //     this.textO.text = this.text
         
-                this.bg.colour = this.bgColour
+            //     this.bg.colour = this.bgColour
         
-                this.bg.draw(ctx)
-                ctx.beginPath()
-                if (this.invert) {
-                    ctx.moveTo(this.x-this.width/2+this.height+0.25 + this.offX, this.y-this.height/2)
-                    ctx.lineTo(this.x-this.width/2 + this.offX, this.y-this.height/2)
-                    ctx.lineTo(this.x-this.width/2+this.height+0.25 + this.offX, this.y+this.height/2)
-                } else {
-                    ctx.moveTo(this.x+this.width/2-this.height-0.25 + this.offX, this.y-this.height/2)
-                    ctx.lineTo(this.x+this.width/2 + this.offX, this.y-this.height/2)
-                    ctx.lineTo(this.x+this.width/2-this.height-0.25 + this.offX, this.y+this.height/2)
-                }
-                ctx.fill()
+            //     this.bg.draw(ctx)
+            //     ctx.beginPath()
+            //     if (this.invert) {
+            //         ctx.moveTo(this.x-this.width/2+this.height+0.25 + this.offX, this.y-this.height/2)
+            //         ctx.lineTo(this.x-this.width/2 + this.offX, this.y-this.height/2)
+            //         ctx.lineTo(this.x-this.width/2+this.height+0.25 + this.offX, this.y+this.height/2)
+            //     } else {
+            //         ctx.moveTo(this.x+this.width/2-this.height-0.25 + this.offX, this.y-this.height/2)
+            //         ctx.lineTo(this.x+this.width/2 + this.offX, this.y-this.height/2)
+            //         ctx.lineTo(this.x+this.width/2-this.height-0.25 + this.offX, this.y+this.height/2)
+            //     }
+            //     ctx.fill()
         
-                this.textO.draw(ctx)
+            //     this.textO.draw()
         
-                ctx.globalAlpha = oldAlpha
+            //     ctx.globalAlpha = oldAlpha
         
-                if (this.invert) {
-                    this.offX *= -1
-                }
-            }
+            //     if (this.invert) {
+            //         this.offX *= -1
+            //     }
+            // }
         }
     }
     get Canvas() {
