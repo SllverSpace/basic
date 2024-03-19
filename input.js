@@ -261,8 +261,9 @@ class Input {
 				this.jKeysRaw[event.key] = true
 			}
 			this.keysRaw[event.key] = true
+
+			this.keyPress(event)
 		}
-		this.keyPress(event)
 		if (event.code == "Tab") {
 			event.preventDefault()
 		}
