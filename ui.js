@@ -759,6 +759,7 @@ class UI {
     get ScrollBar() {
         return class extends ui.Object2D {
             value = 50
+            minValue = 0
             maxValue = 100
             handleImg
             handleClip = "none"
@@ -784,11 +785,11 @@ class UI {
                 return this.hasPoint(input.mouse.x-this.gOff.x, input.mouse.y-this.gOff.y)
             }
             convert(x) {
-                return (x-this.x + this.width/2 - this.bound) / (this.width-this.bound*2) * this.maxValue
+                return (x-this.x + this.width/2 - this.bound) / (this.width-this.bound*2) * (this.maxValue - this.minValue) + this.minValue
             }
             capValue() {
-                if (this.value < 0) {
-                    this.value = 0
+                if (this.value < this.minValue) {
+                    this.value = this.minValue
                 }
                 if (this.value > this.maxValue) {
                     this.value = this.maxValue
@@ -796,7 +797,7 @@ class UI {
             }
             draw() {
                 ui.img(this.x, this.y, this.width, this.height, this.img, this.clip)
-                ui.img(this.x-this.width/2+this.bound + (this.width-this.bound*2) * (this.value/this.maxValue), this.y, this.handleWidth, this.handleHeight, this.handleImg, this.handleClip)
+                ui.img(this.x-this.width/2+this.bound + (this.width-this.bound*2) * ((this.value-this.minValue)/(this.maxValue-this.minValue)), this.y, this.handleWidth, this.handleHeight, this.handleImg, this.handleClip)
             }
         }
     }
