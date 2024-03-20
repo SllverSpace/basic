@@ -207,7 +207,7 @@ class Input {
 
 		this.touches = {}
 		for (let touch of event.touches) {
-			this.touches[touch.identifier] = {x: touch.clientX, y: touch.clientY}
+			this.touches[touch.identifier] = {x: touch.clientX/ui.scale, y: touch.clientY/ui.scale}
 		}
 	}
 	keyPress(event) {
