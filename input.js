@@ -190,14 +190,14 @@ class Input {
 		this.unlockMouse()
 	}
 	touchEnd(event) {
-		setTimeout(() => {
-			for (let touch of event.changedTouches) {
-				delete this.touches[touch.identifier]
-			}
-			if (Object.keys(this.touches).length <= 0) {
-				this.mouse.ldown = false
-			}
-		}, 100)
+		for (let touch of event.changedTouches) {
+			this.mouse.x = touch.clientX/ui.scale
+			this.mouse.y = touch.clientY/ui.scale
+			delete this.touches[touch.identifier]
+		}
+		if (Object.keys(this.touches).length <= 0) {
+			this.mouse.ldown = false
+		}
 		if (this.moved < 50 && this.downTime < 0.2) {
 			this.mouse.lclick = true
 		}
