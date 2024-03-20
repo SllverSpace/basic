@@ -143,6 +143,9 @@ class Input {
 	}
 	touchMove(event) {
 		for (let touch of event.changedTouches) {
+			if (!this.touches[touch.identifier]) {
+				continue
+			}
 			let deltaMove = {x: touch.clientX/ui.scale - this.touches[touch.identifier].x, y: touch.clientY/ui.scale - this.touches[touch.identifier].y}
 
 			this.touches[touch.identifier] = {x: touch.clientX/ui.scale, y: touch.clientY/ui.scale}
