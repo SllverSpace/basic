@@ -213,6 +213,9 @@ class Input {
 	keyPress(event) {
 
 	}
+	keyPressAlways(event) {
+
+	}
 	keydown(event) {
 		let isCmd = event.ctrlKey || event.metaKey
 		if (this.focused) {
@@ -268,6 +271,7 @@ class Input {
 
 			this.keyPress(event)
 		}
+		this.keyPressAlways(event)
 		if (event.code == "Tab") {
 			event.preventDefault()
 		}
