@@ -34,6 +34,10 @@ function update(timestamp) {
     test.basic()
     test.draw()
 
+    if (test.hovered() && input.mouse.lclick) {
+        test.click()
+    }
+
     test2.set(canvas.width/2, canvas.height/2-200*su, 75*su, 75*su)
     test2.textSize = 20*su
     test2.basic()
