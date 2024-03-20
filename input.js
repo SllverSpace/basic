@@ -42,6 +42,7 @@ class Input {
 		window.mobile = this.mobile
 		window.focused = this.focused
 		window.mouse = this.mouse
+		window.touches = this.touches
 	}
 	copyText(text) {
 		navigator.clipboard.writeText(text)
