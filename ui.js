@@ -104,7 +104,7 @@ class UI {
     }
     text(x, y, size, text, options={}) {
         if (!this.fontLoaded) { return {lines: 0, width: 0} }
-        if (!text) return
+        if (!text) return {lines: 0, width: 0}
         size *= this.fontSizeMul
         text = text.toString()
 
