@@ -699,12 +699,13 @@ class UI {
             mulVel = 0
             mul = 1
             hoverMul = 0.9
-            clickMul = 0.2
+            clickMul = 0.7
             img
             scaleText = false
             clip
             canvas
             textOff = 0
+            clicked = 0
             colour = [255, 255, 255, 1]
             constructor(type, text="") {
                 super()
@@ -719,18 +720,17 @@ class UI {
                 }
             }
             click() {
-                this.mulVel = -this.clickMul
+                this.clicked = 0.1
+                this.visWidth = this.width*this.hoverMul*this.mul
+                this.visHeight = this.height*this.hoverMul*this.mul
             }
             basic() {
-                this.mulVel += delta * 5
-                this.mul += this.mulVel * delta * 120
-                if (this.mul > 1) {
-                    this.mul = 1
-                }
-                if (this.mul < 0) {
-                    this.mul = 0
-                }
-                if (this.hovered()) {
+                this.clicked -= delta
+                if (this.clicked > 0) {
+                    this.visWidth = utils.lerp(this.visWidth, this.width*this.clickMul*this.mul, delta*15)
+                    this.visHeight = utils.lerp(this.visHeight, this.height*this.clickMul*this.mul, delta*15)
+                    document.body.style.cursor = "pointer"
+                } else if (this.hovered()) {
                     this.visWidth = utils.lerp(this.visWidth, this.width*this.hoverMul*this.mul, delta*15)
                     this.visHeight = utils.lerp(this.visHeight, this.height*this.hoverMul*this.mul, delta*15)
                     document.body.style.cursor = "pointer"
