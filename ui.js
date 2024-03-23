@@ -608,13 +608,13 @@ class UI {
                 ctx.beginPath()
                 let x = this.x
                 let y = this.y
-                if (this.relative && this.canvas) {
-                    x += this.canvas.x-this.canvas.width/2
-                    y += this.canvas.y-this.canvas.height/2
+                if (ui.relative && ui.canvas) {
+                    x += ui.canvas.x-ui.canvas.width/2
+                    y += ui.canvas.y-ui.canvas.height/2
                 }
-                if (this.doScroll && this.canvas) {
-                    x += this.canvas.off.x
-                    y += this.canvas.off.y
+                if (ui.doScroll && ui.canvas) {
+                    x += ui.canvas.off.x
+                    y += ui.canvas.off.y
                 }
                 let w = this.width * this.mulX + this.outlineSize/2
                 let h = this.height * this.mulY + this.outlineSize/2
