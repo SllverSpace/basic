@@ -606,9 +606,19 @@ class UI {
                 ctx.save()
 
                 ctx.beginPath()
+                let x = this.x
+                let y = this.y
+                if (this.relative && this.canvas) {
+                    x += this.canvas.x-this.canvas.width/2
+                    y += this.canvas.y-this.canvas.height/2
+                }
+                if (this.doScroll && this.canvas) {
+                    x += this.canvas.off.x
+                    y += this.canvas.off.y
+                }
                 let w = this.width * this.mulX + this.outlineSize/2
                 let h = this.height * this.mulY + this.outlineSize/2
-                ctx.rect(this.x - w/2, this.y - h/2, w, h)
+                ctx.rect(x - w/2, y - h/2, w, h)
                 ctx.clip()
 
                 ui.rect(this.x, this.y, this.width * this.mulX, this.height * this.mulY, this.colour)
