@@ -13,6 +13,7 @@ test.bgColour = [0, 0, 0, 0.75]
 
 var test2 = new ui.Button("rect", "Click Me!")
 
+var textBox = new ui.TextBox("type here")
 
 function update(timestamp) {
     requestAnimationFrame(update)
@@ -20,6 +21,12 @@ function update(timestamp) {
     utils.getDelta(timestamp)
     ui.resizeCanvas()
     ui.getSu()
+    
+    textBox.set(canvas.width/2, canvas.height/2-100*su, 800*su, 50*su)
+    textBox.outlineSize = 10*su
+
+    textBox.hover()
+    textBox.draw()
 
     dropdown.set(canvas.width/2, canvas.height/2, 800*su, 50*su)
     dropdown.set2(30*su, 5*su)
@@ -57,6 +64,7 @@ function update(timestamp) {
 input.checkInputs = (event) => {
     input.cistart()
 
+    textBox.checkFocus(event)
 
     input.ciend()
 }

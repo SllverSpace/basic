@@ -230,6 +230,8 @@ class Input {
 					this.focused.sp = 0
 				} else if (event.key == "z" && isCmd) {
 					this.focused.revert()
+				} else if (event.key == "backspace" && isCmd) {
+
 				} else if (event.key != "v" || !isCmd) {
 					this.focused.text = utils.insertAtIndex(this.focused.text, this.focused.sp, event.key)
 					this.focused.sp += 1
@@ -239,6 +241,16 @@ class Input {
 				this.focused.sp -= 1
 				if (this.focused.sp < 0) {
 					this.focused.sp = 0
+				}
+				if (isCmd) {
+					while (this.focused.text[this.focused.sp-1] != " ") {
+						this.focused.text = utils.removeAtIndex(this.focused.text, this.focused.sp-1)
+						this.focused.sp -= 1
+						if (this.focused.sp < 0) {
+							this.focused.sp = 0
+							break
+						}
+					}
 				}
 			} else if (event.key == "ArrowLeft") {
 				this.focused.sp -= 1
