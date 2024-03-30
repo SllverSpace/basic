@@ -510,11 +510,14 @@ class UI {
             flash = 0
             maxCopies = 100
             flashA = 0
+            focusA = 0
             copies = []
             lastText = null
             sp = 0
             twi = 0
             off = 0
+            rx = 0
+            ry = 0
             constructor(placeholder="", colour=[127, 127, 127, 1]) {
                 super()
                 this.placeholder = placeholder
@@ -580,6 +583,15 @@ class UI {
                 } else {
                     this.flashA = utils.lerp(this.flashA, 0, delta*20)
                 }
+
+                if (this.focused) {
+                    this.focusA = utils.lerp(this.focusA, 1, delta*10)
+                } else {
+                    this.focusA = utils.lerp(this.focusA, 0, delta*10)
+                }
+                if (this.focusA < 0.01) {
+                    this.focusA = 0
+                }
             }
             addCopy() {
                 this.time = 0
@@ -602,7 +614,29 @@ class UI {
                     this.time = 0
                 }
             }
-            draw() {
+            draw(ignore=false) {
+                this.rx = this.x
+                this.ry = this.y
+                if (ui.relative && ui.canvas) {
+                    this.rx += ui.canvas.x-ui.canvas.width/2
+                    this.ry += ui.canvas.y-ui.canvas.height/2
+                }
+                if (ui.doScroll && ui.canvas) {
+                    this.rx += ui.canvas.off.x
+                    this.ry += ui.canvas.off.y
+                }
+                if (this.focused && input.mobile && !ignore) return
+
+                if (input.focusedL == this && input.mobile) ui.rect(canvas.width/2, canvas.height/2, canvas.width, canvas.height, [0, 0, 0, this.focusA/4])
+
+                let lx = this.x
+                let ly = this.y
+
+                if (input.mobile && input.focusedL == this) {
+                    this.x = this.rx + (canvas.width/2 - this.rx) * this.focusA
+                    this.y = this.ry + (this.height/2+25*su - this.ry) * this.focusA
+                }
+
                 ctx.save()
 
                 ctx.beginPath()
@@ -692,6 +726,9 @@ class UI {
                 ctx.restore()
 
                 ui.rect(this.x, this.y, this.width + s, this.height + s, [0, 0, 0, 0], this.outlineSize/4, [0, 0, 255, this.focusTime*10])
+
+                this.x = lx
+                this.y = ly
             }
         }
     }

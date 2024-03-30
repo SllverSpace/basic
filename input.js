@@ -13,6 +13,7 @@ class Input {
 	startP
 	copyFlash = 0
 	copyFlashA = 0
+	focusedL = null
 	constructor() {
 		this.getInput = document.createElement("textarea")
 		this.getInput.style.position = "absolute"
@@ -336,12 +337,23 @@ class Input {
 		this.mouse.rclick = false
 		this.jKeys = {}
 		this.jKeysRaw = {}
+
+		if (this.focused) {
+			this.focusedL = this.focused
+		}
+		if (this.focusedL && this.focusedL.focusA < 0.01) {
+			this.focusedL = null
+		}
 		// if (document.activeElement != this.getInput) {
 		// 	if (this.focused) {
 		// 		this.focused.focused = false
 		// 		this.focused = null
 		// 	}
 		// }
+
+		if (this.mobile && this.focusedL) {
+			this.focusedL.draw(true)
+		}
 	}
 }
 
