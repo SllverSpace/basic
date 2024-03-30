@@ -615,15 +615,17 @@ class UI {
                 }
             }
             draw(ignore=false) {
-                this.rx = this.x
-                this.ry = this.y
-                if (ui.relative && ui.canvas) {
-                    this.rx += ui.canvas.x-ui.canvas.width/2
-                    this.ry += ui.canvas.y-ui.canvas.height/2
-                }
-                if (ui.doScroll && ui.canvas) {
-                    this.rx += ui.canvas.off.x
-                    this.ry += ui.canvas.off.y
+                if (!ignore) {
+                    this.rx = this.x
+                    this.ry = this.y
+                    if (ui.relative && ui.canvas) {
+                        this.rx += ui.canvas.x-ui.canvas.width/2
+                        this.ry += ui.canvas.y-ui.canvas.height/2
+                    }
+                    if (ui.doScroll && ui.canvas) {
+                        this.rx += ui.canvas.off.x
+                        this.ry += ui.canvas.off.y
+                    }
                 }
                 if (this.focused && input.mobile && !ignore) return
 
