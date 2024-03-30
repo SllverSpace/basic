@@ -17,6 +17,7 @@ class Input {
 		this.getInput = document.createElement("textarea")
 		this.getInput.style.position = "absolute"
 		this.getInput.style.left = "-1000px"
+		this.getInput.style.top = "-1000px"
 		document.body.appendChild(this.getInput)
 		
 		addEventListener("mousedown", (event) => {this.mouseDown(event)})
