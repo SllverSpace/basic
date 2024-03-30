@@ -627,7 +627,7 @@ class UI {
                         this.ry += ui.canvas.off.y
                     }
                 }
-                if (this.focused && input.mobile && !ignore) return
+                if (input.focusedL == this && input.mobile && !ignore) return
 
                 if (input.focusedL == this && input.mobile) ui.rect(canvas.width/2, canvas.height/2, canvas.width, canvas.height, [0, 0, 0, this.focusA/4])
 
