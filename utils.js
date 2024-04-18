@@ -27,10 +27,13 @@ class Utils {
     setup(id="canvas", viewportContent=null) {
         window.canvas = document.getElementById(id)
         window.ctx = window.canvas.getContext("2d")
-        let viewportMeta = document.createElement("meta")
-        viewportMeta.name = "viewport"
-        viewportMeta.content = viewportContent ? viewportContent : "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
-        document.head.appendChild(viewportMeta)
+        this.viewportMeta = document.createElement("meta")
+        this.viewportMeta.name = "viewport"
+        this.viewportMeta.content = viewportContent ? viewportContent : "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+        document.head.appendChild(this.viewportMeta)
+    }
+    ignoreSafeArea() {
+        this.viewportMeta.content += ", viewport-fit=cover"
     }
     setStyles() {
         canvas.style.position = "absolute"

@@ -1,0 +1,17 @@
+{
+    "name": "Basic",
+    "short_name": "Basic",
+    "description": "Cool UI System",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#FFFFFF",
+    "theme_color": "#FFFFFF",
+    "icons": [
+      {
+        "src": "assets/favicon.png",
+        "sizes": "256x256",
+        "type": "image/png"
+      }
+    ]
+  }
+  

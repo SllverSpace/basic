@@ -1,5 +1,6 @@
 
 utils.setup()
+utils.ignoreSafeArea()
 utils.setStyles()
 
 var delta = 0
@@ -15,12 +16,18 @@ var test2 = new ui.Button("rect", "Click Me!")
 
 var textBox = new ui.TextBox("type here")
 
+var fps = 0
+var fps2 = 0
+
 function update(timestamp) {
     requestAnimationFrame(update)
+    fps++
     
     utils.getDelta(timestamp)
     ui.resizeCanvas()
     ui.getSu()
+
+    ui.text(100*su, 50*su, 50*su, fps2)
     
     textBox.set(canvas.width/2, canvas.height/2-100*su, 800*su, 50*su)
     textBox.outlineSize = 10*su
@@ -72,5 +79,11 @@ input.checkInputs = (event) => {
 input.scroll = (x, y) => {
    
 }
+
+setInterval(() => {
+    console.log(fps)
+    fps2 = fps
+    fps = 0
+}, 1000)
 
 requestAnimationFrame(update)
