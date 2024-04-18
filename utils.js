@@ -24,12 +24,12 @@ class Utils {
         window.rotv2 = this.rotv2
         window.rotv3 = this.rotv3
     }
-    setup(id="canvas") {
+    setup(id="canvas", viewportContent=null) {
         window.canvas = document.getElementById(id)
         window.ctx = window.canvas.getContext("2d")
         let viewportMeta = document.createElement("meta")
         viewportMeta.name = "viewport"
-        viewportMeta.content = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+        viewportMeta.content = viewportContent ? viewportContent : "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
         document.head.appendChild(viewportMeta)
     }
     setStyles() {
