@@ -23,6 +23,9 @@ class Utils {
 
         window.rotv2 = this.rotv2
         window.rotv3 = this.rotv3
+
+        this.raths = false
+        this.rathsMsg = msg
     }
     setup(id="canvas", viewportContent=null) {
         window.canvas = document.getElementById(id)
@@ -31,6 +34,10 @@ class Utils {
         this.viewportMeta.name = "viewport"
         this.viewportMeta.content = viewportContent ? viewportContent : "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
         document.head.appendChild(this.viewportMeta)
+    }
+    requestAddToHomeScreen(msg="Hey there! You seem to like this website, want to install it as an app?") {
+        this.raths = true
+        this.rathsMsg = msg
     }
     ignoreSafeArea() {
         this.viewportMeta.content += ", viewport-fit=cover"

@@ -14,6 +14,7 @@ class Input {
 	copyFlash = 0
 	copyFlashA = 0
 	focusedL = null
+	rathsA = 0
 	constructor() {
 		this.getInput = document.createElement("textarea")
 		this.getInput.style.position = "absolute"
@@ -330,6 +331,17 @@ class Input {
 					this.copyFlash = 1
 				}
 			}
+		}
+
+		if (utils.raths) {
+			this.rathsA = utils.lerp(this.rathsA, 1, delta*10)
+		} else {
+			this.rathsA = utils.lerp(this.rathsA, 0, delta*10)
+		}
+
+		if (this.rathsA > 0.01) {
+			ui.rect(canvas.width/2, 210*su, 500*su, 400*su, [127, 127, 127, this.rathsA*0.5], 10*su, [0, 60, 127, 0.5])
+			ui.text(canvas.width/2, 100*su, 40*su, utils.rathsMsg, {wrap: 500*su, align: "center"})
 		}
 
 
