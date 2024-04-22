@@ -25,7 +25,7 @@ class Utils {
         window.rotv3 = this.rotv3
 
         this.raths = false
-        this.rathsMsg = msg
+        this.rathsMsg = ""
     }
     setup(id="canvas", viewportContent=null) {
         window.canvas = document.getElementById(id)
