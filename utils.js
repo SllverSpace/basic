@@ -23,6 +23,8 @@ class Utils {
 
         window.rotv2 = this.rotv2
         window.rotv3 = this.rotv3
+        window.rotv2x = this.rotv2x
+        window.rotv2y = this.rotv2y
 
         this.raths = false
         this.rathsMsg = ""
@@ -124,6 +126,12 @@ class Utils {
         let z2 = -x1 * Math.sin(rot.y) + z1 * Math.cos(rot.y)
 
         return {x:x2, y:y2, z:z2}
+    }
+    rotv2x(x, y, rot) {
+        return vec.x*Math.sin(rot) + vec.y*Math.sin(rot+Math.PI/2)
+    }
+    rotv2y(x, y, rot) {
+        return vec.x*Math.cos(rot) + vec.y*Math.cos(rot+Math.PI/2)
     }
 
     lerp(start, end, multiply) {
