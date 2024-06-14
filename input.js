@@ -72,6 +72,13 @@ class Input {
 	contextmenu(event) {
 		event.preventDefault()
 	}
+	endFocus() {
+		if (this.focused) {
+			this.focused.focused = false
+			this.focused = null
+		}
+		this.getInput.blur()
+	}
 	cistart() {
 		if (this.focused) {
 			this.focused.focused = false
