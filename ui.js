@@ -184,9 +184,6 @@ class UI {
                 line = word + " "
             }
         }
-        if (line[line.length-1] == " ") {
-            line = line.substring(0, line.length-1)
-        }
         lines.push(line)
 
         let maxWidth = 0
