@@ -334,6 +334,12 @@ class UI {
         }
         ctx.lineWidth = outlineSize
 
+        let simple = wrap == -1 && !text.includes("\n")
+        let amt = 0
+        let lw = ctx.measureText(text).width
+        if (!simple) simple = lw < wrap && !text.includes("\n")
+        if (simple) return {lines: 1, width: lw}
+
         let words = text.split(" ")
         let lines = []
         let line = ""
