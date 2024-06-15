@@ -178,9 +178,6 @@ class UI {
             if ((ctx.measureText(line + word + " ").width < wrap || wrap == -1) && !newLine) {
                 line += word + " "
             } else {
-                if (line[line.length-1] == " ") {
-                    line = line.substring(0, line.length-1)
-                }
                 
                 // console.log(line.replace(" ", "/"))
                 lines.push(line)
@@ -196,8 +193,12 @@ class UI {
         for (let i = 0; i < lines.length; i++) {
             let w = ctx.measureText(lines[i]).width
             while (w > wrap && wrap != -1) {
+                lines[i+1] = lines[i][lines[i].length-1] + (lines[i+1] ? lines[i+1] : "")
                 lines[i] = lines[i].slice(0, -1)
                 w = ctx.measureText(lines[i]).width
+            }
+            if (line[line.length-1] == " ") {
+                line = line.substring(0, line.length-1)
             }
             if (w > maxWidth) {
                 maxWidth = w

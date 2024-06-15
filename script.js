@@ -28,6 +28,8 @@ function update(timestamp) {
     ui.getSu()
 
     ui.text(100*su, 50*su, 50*su, fps2)
+
+    ui.text(20*su, 50*su, 30*su, "This is a very long piece of text \nand now it's another line, but what happens if a just talk a lot, ohhh gotcha it's going to start wrapping lol, here's the alphabet: abcdefghijklmnopqrstuvwyxz0123456789 and here's some more yapping", {wrap: 500*su})
     
     textBox.set(canvas.width/2, canvas.height/2-100*su, 800*su, 50*su)
     textBox.outlineSize = 10*su
