@@ -172,6 +172,7 @@ class UI {
         let lines = []
         let line = ""
         let newLine = false
+        let i = 0
         for (let word of words) {
             newLine = word.includes("\n")
             word = word.replace("\n", "")
@@ -182,7 +183,20 @@ class UI {
                 // console.log(line.replace(" ", "/"))
                 lines.push(line)
                 line = word + " "
+                let newWord = ""
+                let w = ctx.measureText(line).width
+                while (w > wrap && wrap != -1) {
+                    newWord = line[line.length-1] + newWord
+                    line = line.slice(0, -1)
+                    w = ctx.measureText(line).width
+                }
+                if (newWord != "") {
+                    lines.push(line)
+                    line = newWord + " "
+                }
+                // words.splice(i, 0, newWord)
             }
+            i++
         }
         lines.push(line)
 
@@ -190,7 +204,6 @@ class UI {
         for (let i = 0; i < lines.length; i++) {
             let w = ctx.measureText(lines[i]).width
             while (w > wrap && wrap != -1) {
-                lines[i+1] = lines[i][lines[i].length-1] + (lines[i+1] ? lines[i+1] : "")
                 lines[i] = lines[i].slice(0, -1)
                 w = ctx.measureText(lines[i]).width
             }
