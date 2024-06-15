@@ -333,42 +333,51 @@ class UI {
             outlineSize = size/this.autoOutline
         }
         ctx.lineWidth = outlineSize
+
         let words = text.split(" ")
         let lines = []
         let line = ""
+        let newLine = false
+        let i = 0
         for (let word of words) {
-            let newLine = word.includes("\n")
+            newLine = word.includes("\n")
             word = word.replace("\n", "")
             if ((ctx.measureText(line + word + " ").width < wrap || wrap == -1) && !newLine) {
                 line += word + " "
             } else {
-                if (line[line.length-1] == " ") {
-                    line = line.substring(0, line.length-1)
-                }
+                
+                // console.log(line.replace(" ", "/"))
                 lines.push(line)
                 line = word + " "
+                let newWord = ""
+                let w = ctx.measureText(line).width
+                while (w > wrap && wrap != -1) {
+                    newWord = line[line.length-1] + newWord
+                    line = line.slice(0, -1)
+                    w = ctx.measureText(line).width
+                }
+                if (newWord != "") {
+                    lines.push(line)
+                    line = newWord + " "
+                }
+                // words.splice(i, 0, newWord)
             }
-        }
-        if (line[line.length-1] == " ") {
-            line = line.substring(0, line.length-1)
+            i++
         }
         lines.push(line)
 
-        for (let i = 0; i < lines.length; i++) {
-            while (ctx.measureText(lines[i]).width > wrap && wrap != -1) {
-                lines[i] = lines[i].slice(0, -1)
-            }
-        }
         let maxWidth = 0
-        let dirs = ["top", "bottom", "left", "right"]
-        let i2 = 0
-        let links2 = []
-        for (let i in lines) {
-            let fixed = lines[i]
-
-            let width = ctx.measureText(fixed).width
-            if (width > maxWidth) {
-                maxWidth = width
+        for (let i = 0; i < lines.length; i++) {
+            let w = ctx.measureText(lines[i]).width
+            while (w > wrap && wrap != -1) {
+                lines[i] = lines[i].slice(0, -1)
+                w = ctx.measureText(lines[i]).width
+            }
+            if (line[line.length-1] == " ") {
+                line = line.substring(0, line.length-1)
+            }
+            if (w > maxWidth) {
+                maxWidth = w
             }
         }
         return {lines: lines.length, width: maxWidth}
