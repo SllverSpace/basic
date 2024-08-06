@@ -1,33 +1,38 @@
 class Utils {
+    prev = {}
     setGlobals(vecs=true) {
-        window.lerp = this.lerp
-        window.cap = this.cap
+        this.setGlobal("lerp", this.lerp)
+        this.setGlobal("cap", this.cap)
         if (!vecs) { return }
-        window.vec2 = this.vec2
-        window.vec3 = this.vec3
+        this.setGlobal("vec2", this.vec2)
+        this.setGlobal("vec3", this.vec3)
 
-        window.addv2 = this.addv2
-        window.subv2 = this.subv2
-        window.mulv2 = this.mulv2
-        window.divv2 = this.divv2
+        this.setGlobal("addv2", this.addv2)
+        this.setGlobal("subv2", this.subv2)
+        this.setGlobal("mulv2", this.mulv2)
+        this.setGlobal("divv2", this.divv2)
 
-        window.addv3 = this.addv3
-        window.subv3 = this.subv3
-        window.mulv3 = this.mulv3
-        window.divv3 = this.divv3
+        this.setGlobal("addv3", this.addv3)
+        this.setGlobal("subv3", this.subv3)
+        this.setGlobal("mulv3", this.mulv3)
+        this.setGlobal("divv3", this.divv3)
 
-        window.addvl3 = this.addvl3
-        window.subvl3 = this.subvl3
-        window.mulvl3 = this.mulvl3
-        window.divvl3 = this.divvl3
+        this.setGlobal("addvl3", this.addvl3)
+        this.setGlobal("subvl3", this.subvl3)
+        this.setGlobal("mulvl3", this.mulvl3)
+        this.setGlobal("divvl3", this.divvl3)
 
-        window.rotv2 = this.rotv2
-        window.rotv3 = this.rotv3
-        window.rotv2x = this.rotv2x
-        window.rotv2y = this.rotv2y
+        this.setGlobal("rotv2", this.rotv2)
+        this.setGlobal("rotv3", this.rotv3)
+        this.setGlobal("rotv2x", this.rotv2x)
+        this.setGlobal("rotv2y", this.rotv2y)
 
         this.raths = false
         this.rathsMsg = ""
+    }
+    setGlobal(name, value) {
+        this.prev[name] = window[name]
+        window[name] = value
     }
     setup(id="canvas", viewportContent=null) {
         window.canvas = document.getElementById(id)
